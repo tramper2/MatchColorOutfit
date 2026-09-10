@@ -361,6 +361,28 @@ function renderPalette() {
 }
 
 /**
+ * 팔레트 스크롤 영역 높이를 마네킹 존 높이와 동일하게 동기화
+ * 3분할 레이아웃에서 팔레트가 마네킹 창 높이만큼만 차지하고,
+ * 그 안에서 세로 스크롤로 컬러를 탐색·터치 선택하도록 합니다.
+ */
+function syncPaletteScrollHeight() {
+  if (!DOM.paletteGrid) return;
+  const manZone = document.querySelector('.mannequin-zone');
+  const palZone = document.querySelector('.palette-zone');
+  if (!manZone || !palZone) return;
+
+  const manHeight = manZone.getBoundingClientRect().height;
+  const header = palZone.querySelector('.step-label-group');
+  const meta = palZone.querySelector('.selected-color-meta');
+  const headerHeight = header ? header.getBoundingClientRect().height : 0;
+  const metaHeight = meta ? meta.getBoundingClientRect().height : 0;
+  const rowGap = parseFloat(getComputedStyle(palZone).rowGap) || 0;
+
+  const maxHeight = Math.max(100, manHeight - headerHeight - metaHeight - rowGap * 2);
+  DOM.paletteGrid.style.maxHeight = `${maxHeight}px`;
+}
+
+/**
  * 기준 컬러 메타 정보 업데이트
  */
 function updateSelectedColorMeta(color) {
@@ -749,6 +771,10 @@ function setupEventListeners() {
       renderPalette();
     });
   });
+
+  // 팔레트 스크롤 높이를 마네킹 존에 동기화 (리사이즈/폰트 로드 시 재계산)
+  window.addEventListener('resize', syncPaletteScrollHeight);
+  window.addEventListener('load', syncPaletteScrollHeight);
 }
 
 // --- Seasonal Trend Recommendation Logic ---
@@ -834,6 +860,7 @@ function applyQuickSeasonStyle(topId, bottomId, styleName) {
 // --- App Initialization ---
 function init() {
   setupEventListeners();
+  syncPaletteScrollHeight();
   updateGarmentVisuals();
   renderPalette();
   renderRecommendations();

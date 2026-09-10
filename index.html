@@ -248,35 +248,6 @@
               </div>
             </div>
 
-            <!-- Auxiliary Action Toolbar -->
-            <div class="preview-toolbar" role="toolbar" aria-label="코디 조작 도구">
-              <button type="button" id="btnSwap" class="tool-btn primary-tool" title="상의와 하의 색상을 맞바꿉니다">
-                <span>⇄</span>
-                <span>상·하의 반전</span>
-              </button>
-              <button type="button" id="btnShuffle" class="tool-btn" title="베스트 조합 중 랜덤 1세트를 가져옵니다">
-                <span>🎲</span>
-                <span>랜덤 조합</span>
-              </button>
-              <button type="button" id="btnCopy" class="tool-btn" title="현재 코디 조합을 텍스트로 복사합니다">
-                <span>📋</span>
-                <span>코디 복사</span>
-              </button>
-            </div>
-
-            <!-- Color Harmony Meter -->
-            <div class="harmony-status-card">
-              <div class="harmony-info">
-                <span class="harmony-title">현재 배색 스타일 무드</span>
-                <div id="harmonyDesc" class="harmony-desc">
-                  <span>✨</span>
-                  <span>클래식 캐주얼 정석</span>
-                </div>
-              </div>
-              <div id="harmonyChips" class="harmony-chips">
-                <!-- Dynamically populated chips -->
-              </div>
-            </div>
           </div>
 
           <!-- 중앙: 컬러 팔레트 존 -->
@@ -313,26 +284,64 @@
           <div class="color-theme-tabs" role="tablist" aria-label="컬러 테마 카테고리 탭">
             <button type="button" class="theme-tab-btn active" data-tab="standard">
               <span class="tab-emoji">🌟</span>
-              <span>대표/표준 (15)</span>
+              <span class="tab-label-full">대표/표준 (15)</span>
+              <span class="tab-label-short">대표</span>
             </button>
             <button type="button" class="theme-tab-btn" data-tab="warm">
               <span class="tab-emoji">🍂</span>
-              <span>웜톤 & 얼씨 (8)</span>
+              <span class="tab-label-full">웜톤 & 얼씨 (8)</span>
+              <span class="tab-label-short">웜톤</span>
             </button>
             <button type="button" class="theme-tab-btn" data-tab="cool">
               <span class="tab-emoji">❄️</span>
-              <span>쿨톤 & 모던 (8)</span>
+              <span class="tab-label-full">쿨톤 & 모던 (8)</span>
+              <span class="tab-label-short">쿨톤</span>
             </button>
             <button type="button" class="theme-tab-btn" data-tab="pastel">
               <span class="tab-emoji">🎨</span>
-              <span>파스텔 & 포인트 (8)</span>
+              <span class="tab-label-full">파스텔 & 포인트 (8)</span>
+              <span class="tab-label-short">파스텔</span>
             </button>
             <button type="button" class="theme-tab-btn" data-tab="denim">
               <span class="tab-emoji">👖</span>
-              <span>데님 & 빈티지 (6)</span>
+              <span class="tab-label-full">데님 & 빈티지 (6)</span>
+              <span class="tab-label-short">데님</span>
             </button>
           </div>
 
+        </div>
+
+        <!-- 하단 보조 툴바 & 배색 무드 (3분할 아래 전폭, 모바일 한눈 배치) -->
+        <div class="mannequin-extra">
+          <!-- Auxiliary Action Toolbar -->
+          <div class="preview-toolbar" role="toolbar" aria-label="코디 조작 도구">
+            <button type="button" id="btnSwap" class="tool-btn primary-tool" title="상의와 하의 색상을 맞바꿉니다">
+              <span>⇄</span>
+              <span>상·하의 반전</span>
+            </button>
+            <button type="button" id="btnShuffle" class="tool-btn" title="베스트 조합 중 랜덤 1세트를 가져옵니다">
+              <span>🎲</span>
+              <span>랜덤 조합</span>
+            </button>
+            <button type="button" id="btnCopy" class="tool-btn" title="현재 코디 조합을 텍스트로 복사합니다">
+              <span>📋</span>
+              <span>코디 복사</span>
+            </button>
+          </div>
+
+          <!-- Color Harmony Meter -->
+          <div class="harmony-status-card">
+            <div class="harmony-info">
+              <span class="harmony-title">현재 배색 스타일 무드</span>
+              <div id="harmonyDesc" class="harmony-desc">
+                <span>✨</span>
+                <span>클래식 캐주얼 정석</span>
+              </div>
+            </div>
+            <div id="harmonyChips" class="harmony-chips">
+              <!-- Dynamically populated chips -->
+            </div>
+          </div>
         </div>
       </article>
 
