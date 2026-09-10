@@ -442,21 +442,20 @@ function renderRecommendations() {
   const isTopMode = state.activeMode === 'top';
   const baseColor = isTopMode ? state.selectedTop : state.selectedBottom;
   const oppositeColor = isTopMode ? state.selectedBottom : state.selectedTop;
+  const recList = baseColor.recommendations || [];
 
   // 제목 및 부제목 동적 갱신
   if (DOM.recSectionTitle) {
     DOM.recSectionTitle.innerHTML = `
-      <span>🎯 선택한 ${isTopMode ? '상의' : '하의'}</span>
+      <span>선택한 ${isTopMode ? '상의' : '하의'}</span>
       <span class="target-highlight">[${baseColor.name}]</span>
-      <span>에 어울리는 ${isTopMode ? '하의' : '상의'} 추천</span>
+      <span>에 어울리는 ${isTopMode ? '하의' : '상의'} ${recList.length}가지 색상입니다</span>
     `;
   }
 
   if (DOM.recSectionSubtitle) {
-    DOM.recSectionSubtitle.textContent = `색채학 및 룩룩룩 스타일리스트가 검증한 4~5가지 최적의 매칭 조합입니다.`;
+    DOM.recSectionSubtitle.textContent = `색채학 및 룩룩룩 스타일리스트가 검증한 ${recList.length}가지 추천 매칭 조합입니다.`;
   }
-
-  const recList = baseColor.recommendations || [];
 
   DOM.recCardsGrid.innerHTML = recList.map(rec => {
     const isCurrentApplied = oppositeColor.id === rec.id;
@@ -720,6 +719,16 @@ function setTargetMode(mode) {
   if (state.activeMode === mode) return;
   stopRecommendationCycle();
   state.activeMode = mode;
+
+  // 기준 부위가 추천 카드 객체(rec)면 COLOR_MAP의 전체 컬러 객체로 정규화하여
+  // 해당 색의 recommendations 목록을 확보 (추천 리스트/개수 표시 정상화)
+  if (mode === 'bottom' && !state.selectedBottom.recommendations) {
+    state.selectedBottom = COLOR_MAP.get(state.selectedBottom.id) || state.selectedBottom;
+  }
+  if (mode === 'top' && !state.selectedTop.recommendations) {
+    state.selectedTop = COLOR_MAP.get(state.selectedTop.id) || state.selectedTop;
+  }
+
   updateGarmentVisuals();
   renderPalette();
   renderRecommendations();
