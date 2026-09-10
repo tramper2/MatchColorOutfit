@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <!-- Mobile Web App Meta -->
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- SEO Meta Tags -->
+  <title>MatchFit Color | 옷알못들을 위한 컬러 제안 - 룩룩룩</title>
+  <meta name="description" content="매일 아침 옷 색상 조합이 고민이라면? 상의 또는 하의 컬러를 고르면 색채학과 실제 패션 스타일링 기반의 완벽한 배색을 실시간 추천해 드립니다.">
+  <meta name="keywords" content="패션 배색, 컬러 매칭, 옷 색상 조합, 옷알못, 톤온톤, 남자 코디, 여자 코디, 룩룩룩, looklooklook">
+  <meta name="author" content="룩룩룩">
+  
+  <!-- Open Graph / SNS Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MatchFit Color | 옷알못들을 위한 컬러 제안">
+  <meta property="og:description" content="색상 하나만 고르면 실패 없는 인생 코디 컬러를 바로 찾아드립니다. 룩룩룩 공식 컬러 매칭 서비스.">
+  <meta property="og:image" content="./Images/20260905T095153_2c47ee8c.jpg">
+  <meta property="og:url" content="https://looklooklook.pe.kr/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./Images/3LOOK_Logov2.ico">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- ================= Site Header ================= -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="./" class="brand-wrapper" aria-label="MatchFit Color 홈">
+        <img src="./Images/tranLogoLOOK_143930048v2.jpg" alt="룩룩룩 로고" class="brand-logo-img">
+        <div class="brand-text-group">
+          <div class="brand-title">
+            <span>MatchFit</span>
+            <span class="accent">Color</span>
+          </div>
+          <span class="brand-slogan-badge">✨ 옷알못들을 위한 컬러 제안</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="btn-shop-header" title="룩룩룩 공식 쇼핑몰 이동">
+          <span>룩룩룩 가기</span>
+          <span class="arrow-icon">↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= Mobile Sticky Quick Preview Bar ================= -->
+  <!-- 스크롤 시 화면 상단에 달라붙어 언제든 현재 상/하의 색상을 확인하고 원클릭 스왑/랜덤을 할 수 있는 모바일 전용 플로팅 바 -->
+  <nav id="mobileStickyBar" class="mobile-sticky-bar" aria-label="현재 코디 빠른 확인 바">
+    <div class="mobile-sticky-inner">
+      <div class="sticky-preview-chips">
+        <div class="sticky-chip">
+          <span class="chip-label">상의</span>
+          <span id="stickyTopDot" class="chip-color-dot" style="background-color: #1B2A4A;"></span>
+          <span id="stickyTopName" class="chip-name">네이비</span>
+        </div>
+        <span class="chip-divider">+</span>
+        <div class="sticky-chip">
+          <span class="chip-label">하의</span>
+          <span id="stickyBottomDot" class="chip-color-dot" style="background-color: #D7C9AA;"></span>
+          <span id="stickyBottomName" class="chip-name">베이지</span>
+        </div>
+      </div>
+      <div class="sticky-actions">
+        <button type="button" id="btnStickySwap" class="btn-sticky-action" title="상·하의 색상 반전">
+          <span>⇄</span>
+        </button>
+        <button type="button" id="btnStickyShuffle" class="btn-sticky-action" title="랜덤 조합">
+          <span>🎲</span>
+        </button>
+        <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="btn-sticky-shop" title="룩룩룩 쇼핑몰 이동">
+          <span>룩룩룩 ↗</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= Hero Banner Bar ================= -->
+  <aside class="hero-banner-bar" aria-label="서비스 안내">
+    <div class="hero-banner-inner">
+      <div class="hero-text">
+        <span class="hero-icon">👕👖</span>
+        <span>오늘 뭐 입지? 고민 끝! <strong class="hero-highlight">원터치 컬러 매칭</strong>으로 인생 코디 완성</span>
+      </div>
+      <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="hero-link">
+        룩룩룩 신상 보러가기 &rarr;
+      </a>
+    </div>
+  </aside>
+
+  <!-- ================= Main Content Layout ================= -->
+  <main class="main-layout">
+
+    <!-- ================= 🍁 계절별 트렌드 추천 컬러 (Season Trend Curation) ================= -->
+    <section id="seasonalTrendSection" class="glass-card seasonal-trend-card" aria-label="계절별 트렌드 컬러 큐레이션">
+      <div class="trend-card-header">
+        <div class="trend-badge-group">
+          <span id="seasonBadge" class="season-pill-badge">🍂 2026 가을 시즌 트렌드</span>
+          <span class="season-edit-notice">💡 시즌별 트렌드 큐레이션</span>
+        </div>
+        <h2 id="seasonTitle" class="season-title">올가을 패션 트렌드 컬러 제안</h2>
+        <div class="season-quote-box">
+          <p id="seasonGuideText" class="season-guide-text">
+            “올가을 패션 트렌드 컬러는 세련된 그레이와 깊이감 있는 다크 브라운·카멜, 그리고 과감한 포인트 컬러인 퍼플과 레드”
+          </p>
+          <p id="seasonSubText" class="season-subtext">
+            차분한 계절감 속에 깊이와 감각적인 포인트를 더하는 5가지 핵심 컬러를 마네킹에 직접 피팅해 보세요.
+          </p>
+        </div>
+      </div>
+
+      <!-- Trend Color Swatches -->
+      <div class="trend-colors-wrap">
+        <div class="trend-colors-label">
+          <span>🎨 올시즌 5대 트렌드 컬러</span>
+          <span class="trend-hint">터치하여 마네킹에 바로 입어보기</span>
+        </div>
+        <div id="trendColorChips" class="trend-color-chips">
+          <!-- Dynamically populated from SEASON_CONFIGS in season_trend.js -->
+        </div>
+      </div>
+
+      <!-- 1-Click Season Best Co-ord Sets -->
+      <div class="season-quick-styles-wrap">
+        <span class="quick-styles-label">✨ 원클릭 시즌 베스트 코디:</span>
+        <div id="seasonQuickStyles" class="quick-styles-buttons">
+          <!-- Dynamically populated from SEASON_CONFIGS in season_trend.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Grid: Visual Preview Studio + Controls & Palette -->
+    <section class="matching-studio-grid" aria-label="인터랙티브 컬러 매칭 스튜디오">
+
+      <!-- Left Column: Visual Preview Panel -->
+      <article id="mainPreviewStage" class="glass-card preview-panel">
+        <div class="panel-header-row">
+          <h2 class="panel-title">
+            <span>🎨</span>
+            <span>비주얼 코디 프리뷰</span>
+          </h2>
+          <div class="preview-mode-tag font-outfit">LIVE FIT</div>
+        </div>
+
+        <!-- Mannequin Stage -->
+        <div class="mannequin-stage">
+          <div class="garment-wrapper">
+            <!-- Floating Top Badge -->
+            <div id="topColorBadge" class="floating-color-badge floating-top-badge">
+              <span class="badge-color-dot" style="background-color: #1B2A4A;"></span>
+              <span>상의: 네이비</span>
+            </div>
+
+            <!-- Top SVG -->
+            <div id="svgTopContainer" class="svg-container-box"></div>
+
+            <!-- Bottom SVG -->
+            <div id="svgBottomContainer" class="svg-container-box"></div>
+
+            <!-- Floating Bottom Badge -->
+            <div id="bottomColorBadge" class="floating-color-badge floating-bottom-badge">
+              <span class="badge-color-dot" style="background-color: #D7C9AA;"></span>
+              <span>하의: 베이지</span>
+            </div>
+          </div>
+
+          <!-- Bottom Silhouette Toggle -->
+          <div class="bottom-type-selector" role="group" aria-label="하의 형태 선택">
+            <button type="button" id="btnPants" class="type-toggle-btn active" title="슬랙스 팬츠 실루엣">
+              <span>👖</span>
+              <span>슬랙스 바지</span>
+            </button>
+            <button type="button" id="btnSkirt" class="type-toggle-btn" title="A라인 스커트 실루엣">
+              <span>👗</span>
+              <span>A라인 치마</span>
+            </button>
+          </div>
+
+          <!-- Click to Select Hint -->
+          <div class="mannequin-click-hint" aria-hidden="true">
+            <span>👆</span>
+            <span>상의나 하의를 직접 클릭(터치)하여 기준 옷을 바꿀 수 있습니다</span>
+          </div>
+        </div>
+
+        <!-- Auxiliary Action Toolbar -->
+        <div class="preview-toolbar" role="toolbar" aria-label="코디 조작 도구">
+          <button type="button" id="btnSwap" class="tool-btn primary-tool" title="상의와 하의 색상을 맞바꿉니다">
+            <span>⇄</span>
+            <span>상·하의 반전</span>
+          </button>
+          <button type="button" id="btnShuffle" class="tool-btn" title="베스트 조합 중 랜덤 1세트를 가져옵니다">
+            <span>🎲</span>
+            <span>랜덤 조합</span>
+          </button>
+          <button type="button" id="btnCopy" class="tool-btn" title="현재 코디 조합을 텍스트로 복사합니다">
+            <span>📋</span>
+            <span>코디 복사</span>
+          </button>
+        </div>
+
+        <!-- Color Harmony Meter -->
+        <div class="harmony-status-card">
+          <div class="harmony-info">
+            <span class="harmony-title">현재 배색 스타일 무드</span>
+            <div id="harmonyDesc" class="harmony-desc">
+              <span>✨</span>
+              <span>클래식 캐주얼 정석</span>
+            </div>
+          </div>
+          <div id="harmonyChips" class="harmony-chips">
+            <!-- Dynamically populated chips -->
+          </div>
+        </div>
+      </article>
+
+      <!-- Right Column: Controls & Palette Panel -->
+      <article class="glass-card control-panel">
+
+        <!-- Step 1: Base Target Selection -->
+        <div class="step-section">
+          <div class="step-label-group">
+            <span class="step-title">
+              <span class="step-num">1</span>
+              <span>기준 옷 선택</span>
+            </span>
+            <span class="step-hint">먼저 고를 부위를 터치하세요</span>
+          </div>
+
+          <div class="mode-selector-grid">
+            <button type="button" id="btnModeTop" class="mode-btn active">
+              <span class="mode-icon">👕</span>
+              <span class="mode-title-text">상의 먼저 고르기</span>
+              <span class="mode-subtext">상의 정하고 하의 추천받기</span>
+            </button>
+            <button type="button" id="btnModeBottom" class="mode-btn">
+              <span class="mode-icon">👖</span>
+              <span class="mode-title-text">하의 먼저 고르기</span>
+              <span class="mode-subtext">하의 정하고 상의 추천받기</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Curated Fashion Color Palette by Theme Tabs -->
+        <div class="step-section">
+          <div class="step-label-group">
+            <span class="step-title">
+              <span class="step-num">2</span>
+              <span>컬러 테마 탭 & 팔레트</span>
+            </span>
+            <button type="button" id="btnReset" class="tool-btn reset-btn" title="기본값으로 되돌리기">
+              <span>↺</span>
+              <span>초기화</span>
+            </button>
+          </div>
+
+          <!-- Color Theme Tabs (대표/표준 15종 + 웜톤 + 쿨톤 + 파스텔 + 데님) -->
+          <div class="color-theme-tabs" role="tablist" aria-label="컬러 테마 카테고리 탭">
+            <button type="button" class="theme-tab-btn active" data-tab="standard">
+              <span class="tab-emoji">🌟</span>
+              <span>대표/표준 (15)</span>
+            </button>
+            <button type="button" class="theme-tab-btn" data-tab="warm">
+              <span class="tab-emoji">🍂</span>
+              <span>웜톤 & 얼씨 (8)</span>
+            </button>
+            <button type="button" class="theme-tab-btn" data-tab="cool">
+              <span class="tab-emoji">❄️</span>
+              <span>쿨톤 & 모던 (8)</span>
+            </button>
+            <button type="button" class="theme-tab-btn" data-tab="pastel">
+              <span class="tab-emoji">🎨</span>
+              <span>파스텔 & 포인트 (8)</span>
+            </button>
+            <button type="button" class="theme-tab-btn" data-tab="denim">
+              <span class="tab-emoji">👖</span>
+              <span>데님 & 빈티지 (6)</span>
+            </button>
+          </div>
+
+          <div id="paletteGrid" class="palette-grid" role="radiogroup" aria-label="기준 컬러 선택">
+            <!-- Swatches Dynamically Injected for Active Tab -->
+          </div>
+        </div>
+
+        <!-- Selected Color Meta Card -->
+        <div class="selected-color-meta">
+          <div id="metaColorPill" class="meta-color-pill" style="background-color: #1B2A4A;"></div>
+          <div class="meta-details">
+            <div class="meta-title-row">
+              <span id="metaColorName" class="meta-color-name">네이비</span>
+              <span id="metaHex" class="meta-hex">#1B2A4A</span>
+            </div>
+            <p id="metaDesc" class="meta-desc">신뢰감과 품격을 전하는 클래식 네이비</p>
+          </div>
+        </div>
+
+      </article>
+
+    </section>
+
+    <!-- Bottom Section: Smart Recommendations Grid -->
+    <section class="recommendation-section" aria-label="스마트 추천 컬러 제안">
+      <div class="section-header-box">
+        <div class="section-title-wrap">
+          <h2 id="recSectionTitle" class="section-title">
+            <span>🎯 선택한 상의</span>
+            <span class="target-highlight">[네이비]</span>
+            <span>에 어울리는 하의 추천</span>
+          </h2>
+          <p id="recSectionSubtitle" class="section-subtitle">
+            색채학 및 룩룩룩 스타일리스트가 검증한 4~5가지 최적의 매칭 조합입니다.
+          </p>
+        </div>
+        <span class="rec-swipe-hint font-outfit">👈 카드를 옆으로 넘겨보세요</span>
+      </div>
+
+      <!-- Recommendation Cards List (모바일에서는 가로 스와이프 캐러셀 지원) -->
+      <div id="recCardsGrid" class="rec-cards-grid">
+        <!-- Dynamically Injected Recommendation Cards -->
+      </div>
+    </section>
+
+    <!-- 룩룩룩 Shopping Mall Promo Showcase Section -->
+    <section class="promo-showcase-card" aria-label="룩룩룩 공식 쇼핑몰 소개">
+      <div class="promo-image-container">
+        <video class="promo-banner-video" autoplay muted loop playsinline poster="./Images/20260905T095153_2c47ee8c.jpg" title="룩룩룩 인트로 영상">
+          <source src="./Images/LOOKLOOKLOOK_Intro.mp4" type="video/mp4">
+          <img src="./Images/20260905T095153_2c47ee8c.jpg" alt="룩룩룩 스타일링 배너" class="promo-banner-img">
+        </video>
+        <div class="promo-img-overlay"></div>
+      </div>
+
+      <div class="promo-content">
+        <span class="promo-tag">
+          <span>🛍️</span>
+          <span>공식 제휴 쇼핑몰</span>
+        </span>
+        <h3 class="promo-heading">
+          지금 마음에 드는 컬러 조합,<br>
+          <span style="color: #38bdf8;">룩룩룩 쇼핑몰</span>에서 실물로 만나보세요!
+        </h3>
+        <p class="promo-desc">
+          크림, 네이비, 모카 브라운, 생지 데님까지! 오늘 화면에서 시뮬레이션한 감각적인 컬러의 셔츠, 슬랙스, 자켓을 <strong>룩룩룩</strong>에서 가장 합리적인 가격과 트렌디한 핏으로 확인하실 수 있습니다.
+        </p>
+        <div class="promo-cta-row">
+          <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="btn-promo-primary" title="룩룩룩 쇼핑몰 방문하기">
+            <span>룩룩룩 쇼핑몰 바로가기</span>
+            <span>&rarr;</span>
+          </a>
+          <span class="promo-url-text font-outfit">looklooklook.pe.kr</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= Mobile Bottom Floating Dock ================= -->
+  <!-- 모바일에서 한 손으로도 언제든 코디를 바꿀 수 있는 하단 플로팅 툴 독 -->
+  <div class="mobile-bottom-dock" aria-label="모바일 하단 빠른 메뉴">
+    <button type="button" id="btnDockSwap" class="dock-btn" title="상·하의 반전">
+      <span class="dock-icon">⇄</span>
+      <span class="dock-label">반전</span>
+    </button>
+    <button type="button" id="btnDockShuffle" class="dock-btn highlight" title="랜덤 조합">
+      <span class="dock-icon">🎲</span>
+      <span class="dock-label">랜덤 코디</span>
+    </button>
+    <button type="button" id="btnDockCopy" class="dock-btn" title="코디 복사">
+      <span class="dock-icon">📋</span>
+      <span class="dock-label">복사</span>
+    </button>
+    <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="dock-btn shop-dock" title="룩룩룩 쇼핑몰">
+      <span class="dock-icon">🛍️</span>
+      <span class="dock-label">룩룩룩</span>
+    </a>
+  </div>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top-row">
+        <div class="footer-brand">
+          <img src="./Images/3LOOK_Logov2.jpg" alt="룩룩룩 로고" class="footer-logo-img">
+          <div>
+            <div style="font-weight: 700; color: #fff; font-size: 1rem;">MatchFit Color</div>
+            <p class="footer-slogan">옷알못들을 위한 컬러 제안 | Partner: 룩룩룩</p>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="footer-link">룩룩룩 공식 쇼핑몰</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <span class="footer-copy">&copy; 2026 룩룩룩. All rights reserved. Designed for effortless styling.</span>
+        <span style="color: var(--text-muted);">Mobile-First Responsive SPA</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Main Application Script -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "match-color-outfit",
+  "version": "1.0.0",
+  "description": "옷알못들을 위한 컬러 제안 - 패션 상·하의 인터랙티브 컬러 매칭 서비스",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve .",
+    "deploy": "npx -y gh-pages -d ."
+  },
+  "keywords": [
+    "fashion",
+    "color-matching",
+    "3look",
+    "looklooklook"
+  ],
+  "author": "룩룩룩",
+  "license": "MIT",
+  "homepage": "https://tramper2.github.io/MatchColorOutfit/"
+}
