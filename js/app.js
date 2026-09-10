@@ -481,9 +481,6 @@ function renderRecommendations() {
           <button type="button" class="btn-apply-rec" data-rec-id="${rec.id}">
             ${isCurrentApplied ? '✓ 현재 입어보는 중' : '이 색상 입어보기'}
           </button>
-          <a href="${SHOP_INFO.url}" target="_blank" rel="noopener noreferrer" class="btn-shop-item-link" title="룩룩룩 쇼핑몰에서 ${rec.name} 아이템 찾기">
-            룩룩룩 ↗
-          </a>
         </div>
       </div>
     `;
@@ -491,8 +488,7 @@ function renderRecommendations() {
 
   // 추천 카드 클릭 이벤트 바인딩
   DOM.recCardsGrid.querySelectorAll('.rec-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('.btn-shop-item-link')) return;
+    card.addEventListener('click', () => {
       const recId = card.getAttribute('data-rec-id');
       applyRecommendation(recId);
     });
