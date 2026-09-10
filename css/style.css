@@ -79,6 +79,20 @@ body {
   font-family: 'Outfit', 'Pretendard', sans-serif;
 }
 
+/* 화면에는 안 보이지만 스크린리더·검색엔진에는 노출되는 텍스트 (SEO용 h1 등) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* --- Header / Navigation --- */
 .site-header {
   position: sticky;
@@ -374,10 +388,7 @@ body {
 
 /* --- Top Grid Section (Visual Preview + Controls) --- */
 .matching-studio-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 1.75rem;
-  align-items: start;
+  display: block;
 }
 
 /* --- Glassmorphism Card Style --- */
@@ -397,13 +408,11 @@ body {
   border-color: var(--border-glass-strong);
 }
 
-/* --- Visual Preview Panel (Left) --- */
+/* --- Visual Preview Panel (통합 스튜디오) --- */
 .preview-panel {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: sticky;
-  top: 5rem;
+  align-items: stretch;
 }
 
 .panel-header-row {
@@ -444,6 +453,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex: 1;
   position: relative;
   box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45);
 }
@@ -502,6 +513,33 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* 추천 컬러 다이나믹 순환 미리보기 연출 (앰버 글로우 펄스) */
+.svg-container-box.is-cycling {
+  animation: cyclingPulse 1.3s ease-in-out infinite;
+}
+
+.svg-container-box.is-cycling::after {
+  content: "추천 미리보기 ✨";
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  font-size: 0.675rem;
+  font-weight: 800;
+  color: #0f172a;
+  background: #fbbf24;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.5);
+  pointer-events: none;
+  z-index: 10;
+  animation: badgePop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cyclingPulse {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4)); }
+  50% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.8)); }
+}
+
 /* SVG Graphic Elements */
 .svg-garment {
   display: block;
@@ -511,15 +549,15 @@ body {
 }
 
 .svg-top {
-  width: 200px;
-  height: 175px;
+  width: 240px;
+  height: 210px;
   z-index: 2;
   margin-bottom: -12px;
 }
 
 .svg-bottom {
-  width: 185px;
-  height: 215px;
+  width: 222px;
+  height: 240px;
   z-index: 1;
 }
 
@@ -597,6 +635,8 @@ body {
   margin-top: 1.15rem;
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
   background: rgba(15, 23, 42, 0.9);
   padding: 0.25rem;
   border-radius: var(--radius-full);
@@ -629,13 +669,21 @@ body {
   color: #fff;
 }
 
-/* Auxiliary Action Toolbar */
+/* Auxiliary Action Toolbar (3분할 아래 전폭 보조 바) */
+.mannequin-extra {
+  width: 100%;
+  max-width: 640px;
+  margin: 1.25rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .preview-toolbar {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
-  margin-top: 1.15rem;
 }
 
 .tool-btn {
@@ -653,6 +701,8 @@ body {
   gap: 0.35rem;
   transition: all var(--transition-fast);
   min-height: 44px;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .tool-btn:hover {
@@ -679,7 +729,6 @@ body {
 /* Color Harmony Meter */
 .harmony-status-card {
   width: 100%;
-  margin-top: 0.85rem;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
@@ -727,17 +776,28 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
-/* --- Control & Palette Panel (Right) --- */
-.control-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 1.35rem;
+/* --- 통합 스튜디오 3분할 레이아웃 (마네킹 | 팔레트 | 세로 탭 레일) ---
+   마네킹 존이 스튜디오 폭의 절반 이상을 차지하도록 1.5fr:1fr 비율 */
+.studio-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: start;
+  width: 100%;
 }
 
-.step-section {
+.mannequin-zone {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  align-items: center;
+  gap: 1.1rem;
+  min-height: 700px;
+}
+
+.palette-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
 }
 
 .step-label-group {
@@ -774,68 +834,14 @@ body {
   color: var(--text-muted);
 }
 
-.mode-selector-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.65rem;
-}
-
-.mode-btn {
-  background: rgba(30, 41, 59, 0.5);
-  border: 2px solid transparent;
-  border-radius: var(--radius-md);
-  padding: 0.85rem 0.75rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-  transition: all var(--transition-fast);
-  min-height: 84px;
-}
-
-.mode-btn:hover {
-  background: rgba(30, 41, 59, 0.85);
-  color: #fff;
-}
-
-.mode-btn.active {
-  background: rgba(56, 189, 248, 0.12);
-  border-color: #38bdf8;
-  color: #ffffff;
-  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.2);
-}
-
-.mode-icon {
-  font-size: 1.5rem;
-}
-
-.mode-title-text {
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.mode-subtext {
-  font-size: 0.725rem;
-  color: var(--text-muted);
-  font-weight: 400;
-  text-align: center;
-}
-
-.mode-btn.active .mode-subtext {
-  color: #7dd3fc;
-}
-
-/* Color Theme Tabs */
+/* Color Theme Tabs (세로 레일 - 스튜디오 제일 우측, 마네킹 존 높이에 맞춰 장착) */
 .color-theme-tabs {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 0.5rem;
-  overflow-x: auto;
-  padding: 0.25rem 0.15rem 0.65rem;
+  width: 104px;
+  align-self: stretch;
   scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
 }
 
 .color-theme-tabs::-webkit-scrollbar {
@@ -846,17 +852,21 @@ body {
   background: rgba(30, 41, 59, 0.65);
   border: 1px solid var(--border-glass);
   color: var(--text-secondary);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  padding: 0.5rem 0.85rem;
-  border-radius: var(--radius-full);
+  padding: 0.7rem 0.4rem;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  white-space: nowrap;
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
+  justify-content: center;
+  gap: 0.45rem;
+  text-align: center;
+  line-height: 1.3;
   transition: all var(--transition-fast);
-  flex-shrink: 0;
+  flex: 1;
+  min-height: 64px;
 }
 
 .theme-tab-btn:hover {
@@ -877,11 +887,35 @@ body {
   font-size: 0.95rem;
 }
 
-/* Palette Swatches Grid (15 Fashion Colors) */
+/* 모바일 세로 레일용 짧은 라벨 (데스크톱에서는 숨김) */
+.theme-tab-btn .tab-label-short {
+  display: none;
+}
+
+/* Palette Swatches Grid (15 Fashion Colors)
+   통합 스튜디오에서는 마네킹 창과 같은 높이의 세로 스크롤형 1열 리스트 (JS로 높이 동기화) */
 .palette-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1fr;
   gap: 0.55rem;
+  overflow-y: auto;
+  padding: 0.35rem 0.5rem 0.35rem 0.35rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.35) rgba(148, 163, 184, 0.1);
+}
+
+.palette-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.palette-grid::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.35);
+  border-radius: 999px;
+}
+
+.palette-grid::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.1);
+  border-radius: 999px;
 }
 
 .swatch-card {
@@ -889,15 +923,15 @@ body {
   background: rgba(15, 23, 42, 0.7);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  padding: 0.55rem 0.3rem;
+  padding: 0.45rem 0.7rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.65rem;
   cursor: pointer;
   transition: all var(--transition-fast);
   user-select: none;
-  min-height: 72px;
+  min-height: 62px;
 }
 
 .swatch-card:hover {
@@ -915,8 +949,8 @@ body {
 }
 
 .swatch-circle {
-  width: 38px;
-  height: 38px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
@@ -940,20 +974,22 @@ body {
 }
 
 .swatch-name {
+  flex: 1;
+  min-width: 0;
   font-size: 0.725rem;
   font-weight: 600;
   color: var(--text-primary);
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
 }
 
 .swatch-hex {
   font-size: 0.625rem;
   font-family: 'Outfit', monospace;
   color: var(--text-muted);
+  margin-left: auto;
 }
 
 /* Selected Color Information Card */
@@ -1531,13 +1567,128 @@ body {
    Responsive & Smartphone Breakpoints
    ========================================================================== */
 @media (max-width: 960px) {
-  .matching-studio-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
+  /* 스마트폰 기준: 마네킹 | 세로 스크롤 팔레트 | 세로 탭 레일 3분할을 한눈에
+     (마네킹 존이 스튜디오 폭의 절반 이상 차지) */
+  .studio-split {
+    grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr) 46px;
+    gap: 0.6rem;
   }
-  .preview-panel {
-    position: static;
+  .mannequin-zone {
+    min-height: 420px;
   }
+  .palette-zone {
+    gap: 0.6rem;
+  }
+
+  /* 세로 탭 레일: 좁은 폭 + 짧은 라벨 */
+  .color-theme-tabs {
+    width: 46px;
+    gap: 0.35rem;
+  }
+  .theme-tab-btn {
+    padding: 0.4rem 0.15rem;
+    gap: 0.3rem;
+    border-radius: var(--radius-sm);
+    min-height: 0;
+    font-size: 0.6rem;
+  }
+  .theme-tab-btn .tab-emoji {
+    font-size: 0.85rem;
+  }
+  .theme-tab-btn .tab-label-full {
+    display: none;
+  }
+  .theme-tab-btn .tab-label-short {
+    display: block;
+  }
+
+  /* 팔레트: 컴팩트 2열 세로 스크롤 (마네킹 창 높이와 동기화) */
+  .palette-grid {
+    gap: 0.4rem;
+    padding: 0.25rem 0.3rem 0.25rem 0.25rem;
+  }
+  .swatch-card {
+    min-height: 52px;
+    padding: 0.35rem 0.45rem;
+    gap: 0.35rem;
+  }
+  .swatch-circle {
+    width: 30px;
+    height: 30px;
+  }
+  .swatch-name {
+    font-size: 0.62rem;
+  }
+  .swatch-hex {
+    display: none;
+  }
+  .step-label-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .selected-color-meta {
+    padding: 0.6rem 0.7rem;
+    gap: 0.5rem;
+  }
+  .meta-color-pill {
+    width: 34px;
+    height: 34px;
+  }
+  .meta-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
+  .meta-desc {
+    display: none;
+  }
+
+  /* 마네킹 스테이지 컴팩트 (높이 30% 확대 반영) */
+  .mannequin-stage {
+    padding: 0.9rem 0.5rem;
+  }
+  .svg-top {
+    width: 130px;
+    height: 114px;
+    margin-bottom: -8px;
+  }
+  .svg-bottom {
+    width: 122px;
+    height: 132px;
+  }
+  .bottom-type-selector {
+    margin-top: 0.8rem;
+  }
+  .type-toggle-btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.5rem;
+    gap: 0.25rem;
+    min-height: 32px;
+  }
+  .mannequin-click-hint {
+    display: none;
+  }
+  .floating-color-badge {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+    gap: 0.3rem;
+  }
+  .svg-container-box.is-active-target::after {
+    content: "🎯";
+    font-size: 0.6rem;
+    padding: 0.1rem 0.35rem;
+    top: 6px;
+    left: 4px;
+  }
+  .svg-container-box.is-cycling::after {
+    content: "✨";
+    font-size: 0.6rem;
+    padding: 0.1rem 0.35rem;
+    top: 6px;
+    left: 4px;
+  }
+
   .promo-showcase-card {
     grid-template-columns: 1fr;
   }
@@ -1814,31 +1965,6 @@ body {
     scroll-snap-align: start;
   }
 
-  .palette-grid {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.4rem;
-  }
-
-  .swatch-card {
-    padding: 0.45rem 0.2rem;
-    min-height: 68px;
-  }
-
-  .swatch-circle {
-    width: 34px;
-    height: 34px;
-  }
-
-  .svg-top {
-    width: 175px;
-    height: 155px;
-  }
-
-  .svg-bottom {
-    width: 160px;
-    height: 190px;
-  }
-
   .main-layout {
     padding: 1rem 0.85rem 6.5rem;
     gap: 1.5rem;
@@ -1860,26 +1986,24 @@ body {
 
 /* --- Extra Small Screens (<= 400px, e.g. iPhone SE, 작은 스마트폰) --- */
 @media (max-width: 400px) {
-  .palette-grid {
-    grid-template-columns: repeat(3, 1fr);
+  /* 헤더가 320px 폭에서 넘치지 않도록 압축 */
+  .site-header {
+    padding: 0.7rem 0.75rem;
+  }
+  .header-container {
+    gap: 0.5rem;
+  }
+  .brand-logo-img {
+    height: 30px;
+  }
+  .btn-shop-header {
+    font-size: 0.72rem;
+    padding: 0.4rem 0.55rem;
   }
   .brand-title {
-    font-size: 1.05rem;
+    font-size: 0.98rem;
   }
   .brand-slogan-badge {
-    display: none;
-  }
-  .mode-btn {
-    padding: 0.65rem 0.5rem;
-    min-height: 74px;
-  }
-  .mode-icon {
-    font-size: 1.3rem;
-  }
-  .mode-title-text {
-    font-size: 0.825rem;
-  }
-  .mode-subtext {
     display: none;
   }
   .btn-shop-header span.arrow-icon {

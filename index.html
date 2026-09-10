@@ -15,13 +15,61 @@
   <meta name="description" content="매일 아침 옷 색상 조합이 고민이라면? 상의 또는 하의 컬러를 고르면 색채학과 실제 패션 스타일링 기반의 완벽한 배색을 실시간 추천해 드립니다.">
   <meta name="keywords" content="패션 배색, 컬러 매칭, 옷 색상 조합, 옷알못, 톤온톤, 남자 코디, 여자 코디, 룩룩룩, looklooklook">
   <meta name="author" content="룩룩룩">
-  
+  <!-- 중복 페이지 판정 방지: 이 체험사이트가 대표 URL임을 명시 -->
+  <link rel="canonical" href="https://tramper2.github.io/MatchColorOutfit/">
+
   <!-- Open Graph / SNS Sharing -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MatchFit Color">
+  <meta property="og:locale" content="ko_KR">
   <meta property="og:title" content="MatchFit Color | 옷알못들을 위한 컬러 제안">
   <meta property="og:description" content="색상 하나만 고르면 실패 없는 인생 코디 컬러를 바로 찾아드립니다. 룩룩룩 공식 컬러 매칭 서비스.">
-  <meta property="og:image" content="./Images/20260905T095153_2c47ee8c.jpg">
-  <meta property="og:url" content="https://looklooklook.pe.kr/">
+  <!-- 카카오톡·페이스북 공유 시 이미지가 뜨도록 절대경로 사용 (룩룩룩 로고를 대표 이미지로) -->
+  <meta property="og:image" content="https://tramper2.github.io/MatchColorOutfit/Images/3LOOK_Logov2.jpg">
+  <meta property="og:image:width" content="807">
+  <meta property="og:image:height" content="844">
+  <!-- 소셜 공유 시 체험사이트(본 사이트)로 연결되도록 수정 -->
+  <meta property="og:url" content="https://tramper2.github.io/MatchColorOutfit/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MatchFit Color | 옷알못들을 위한 컬러 제안">
+  <meta name="twitter:description" content="색상 하나만 고르면 실패 없는 인생 코디 컬러를 바로 찾아드립니다.">
+  <meta name="twitter:image" content="https://tramper2.github.io/MatchColorOutfit/Images/3LOOK_Logov2.jpg">
+
+  <!-- 구조화 데이터 (JSON-LD): 웹 애플리케이션 + 웹사이트 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "MatchFit Color",
+    "alternateName": "옷알못들을 위한 컬러 제안",
+    "url": "https://tramper2.github.io/MatchColorOutfit/",
+    "image": "https://tramper2.github.io/MatchColorOutfit/Images/3LOOK_Logov2.jpg",
+    "description": "상의 또는 하의 컬러를 고르면 색채학 기반의 완벽한 배색 조합을 실시간 추천하는 인터랙티브 패션 컬러 매칭 서비스.",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "ko-KR",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "KRW"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "룩룩룩",
+      "url": "https://looklooklook.pe.kr/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "MatchFit Color",
+    "url": "https://tramper2.github.io/MatchColorOutfit/",
+    "description": "매일 아침 옷 색상 조합이 고민이라면? 옷알못들을 위한 인터랙티브 패션 컬러 매칭 서비스.",
+    "inLanguage": "ko-KR"
+  }
+  </script>
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="./Images/3LOOK_Logov2.ico">
@@ -44,13 +92,6 @@
           <span class="brand-slogan-badge">✨ 옷알못들을 위한 컬러 제안</span>
         </div>
       </a>
-
-      <div class="header-actions">
-        <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="btn-shop-header" title="룩룩룩 공식 쇼핑몰 이동">
-          <span>룩룩룩 가기</span>
-          <span class="arrow-icon">↗</span>
-        </a>
-      </div>
     </div>
   </header>
 
@@ -101,6 +142,9 @@
   <!-- ================= Main Content Layout ================= -->
   <main class="main-layout">
 
+    <!-- 페이지 대표 제목 (검색엔진·스크린리더용, 화면에는 비노출) -->
+    <h1 class="sr-only">MatchFit Color - 옷알못들을 위한 상·하의 컬러 매칭 서비스</h1>
+
     <!-- ================= 🍁 계절별 트렌드 추천 컬러 (Season Trend Curation) ================= -->
     <section id="seasonalTrendSection" class="glass-card seasonal-trend-card" aria-label="계절별 트렌드 컬러 큐레이션">
       <div class="trend-card-header">
@@ -142,7 +186,7 @@
     <!-- Top Grid: Visual Preview Studio + Controls & Palette -->
     <section class="matching-studio-grid" aria-label="인터랙티브 컬러 매칭 스튜디오">
 
-      <!-- Left Column: Visual Preview Panel -->
+      <!-- 비주얼 코디 프리뷰 + 컬러 선택 통합 스튜디오 (마네킹 | 팔레트 | 세로 테마 탭) -->
       <article id="mainPreviewStage" class="glass-card preview-panel">
         <div class="panel-header-row">
           <h2 class="panel-title">
@@ -152,159 +196,146 @@
           <div class="preview-mode-tag font-outfit">LIVE FIT</div>
         </div>
 
-        <!-- Mannequin Stage -->
-        <div class="mannequin-stage">
-          <div class="garment-wrapper">
-            <!-- Floating Top Badge -->
-            <div id="topColorBadge" class="floating-color-badge floating-top-badge">
-              <span class="badge-color-dot" style="background-color: #1B2A4A;"></span>
-              <span>상의: 네이비</span>
+        <div class="studio-split">
+
+          <!-- 좌측: 마네킹 스테이지 존 -->
+          <div class="mannequin-zone">
+            <!-- Mannequin Stage -->
+            <div class="mannequin-stage">
+              <div class="garment-wrapper">
+                <!-- Floating Top Badge -->
+                <div id="topColorBadge" class="floating-color-badge floating-top-badge">
+                  <span class="badge-color-dot" style="background-color: #1B2A4A;"></span>
+                  <span>상의: 네이비</span>
+                </div>
+
+                <!-- Top SVG -->
+                <div id="svgTopContainer" class="svg-container-box"></div>
+
+                <!-- Bottom SVG -->
+                <div id="svgBottomContainer" class="svg-container-box"></div>
+
+                <!-- Floating Bottom Badge -->
+                <div id="bottomColorBadge" class="floating-color-badge floating-bottom-badge">
+                  <span class="badge-color-dot" style="background-color: #D7C9AA;"></span>
+                  <span>하의: 베이지</span>
+                </div>
+              </div>
+
+              <!-- Bottom Silhouette Toggle -->
+              <div class="bottom-type-selector" role="group" aria-label="하의 형태 선택">
+                <button type="button" id="btnPants" class="type-toggle-btn active" title="바지 실루엣">
+                  <span>👖</span>
+                  <span>바지</span>
+                </button>
+                <button type="button" id="btnSkirt" class="type-toggle-btn" title="치마 실루엣">
+                  <span>👗</span>
+                  <span>치마</span>
+                </button>
+              </div>
+
+              <!-- Click to Select Hint -->
+              <div class="mannequin-click-hint" aria-hidden="true">
+                <span>👆</span>
+                <span>상의나 하의를 직접 클릭(터치)하여 기준 옷을 바꿀 수 있습니다</span>
+              </div>
             </div>
 
-            <!-- Top SVG -->
-            <div id="svgTopContainer" class="svg-container-box"></div>
+          </div>
 
-            <!-- Bottom SVG -->
-            <div id="svgBottomContainer" class="svg-container-box"></div>
+          <!-- 중앙: 컬러 팔레트 존 -->
+          <div class="palette-zone">
+            <div class="step-label-group">
+              <span class="step-title">
+                <span class="step-num">1</span>
+                <span>컬러 선택</span>
+              </span>
+              <button type="button" id="btnReset" class="tool-btn reset-btn" title="기본값으로 되돌리기">
+                <span>↺</span>
+                <span>초기화</span>
+              </button>
+            </div>
 
-            <!-- Floating Bottom Badge -->
-            <div id="bottomColorBadge" class="floating-color-badge floating-bottom-badge">
-              <span class="badge-color-dot" style="background-color: #D7C9AA;"></span>
-              <span>하의: 베이지</span>
+            <div id="paletteGrid" class="palette-grid" role="radiogroup" aria-label="기준 컬러 선택">
+              <!-- Swatches Dynamically Injected for Active Tab -->
+            </div>
+
+            <!-- Selected Color Meta Card -->
+            <div class="selected-color-meta">
+              <div id="metaColorPill" class="meta-color-pill" style="background-color: #1B2A4A;"></div>
+              <div class="meta-details">
+                <div class="meta-title-row">
+                  <span id="metaColorName" class="meta-color-name">네이비</span>
+                  <span id="metaHex" class="meta-hex">#1B2A4A</span>
+                </div>
+                <p id="metaDesc" class="meta-desc">신뢰감과 품격을 전하는 클래식 네이비</p>
+              </div>
             </div>
           </div>
 
-          <!-- Bottom Silhouette Toggle -->
-          <div class="bottom-type-selector" role="group" aria-label="하의 형태 선택">
-            <button type="button" id="btnPants" class="type-toggle-btn active" title="슬랙스 팬츠 실루엣">
-              <span>👖</span>
-              <span>슬랙스 바지</span>
-            </button>
-            <button type="button" id="btnSkirt" class="type-toggle-btn" title="A라인 스커트 실루엣">
-              <span>👗</span>
-              <span>A라인 치마</span>
-            </button>
-          </div>
-
-          <!-- Click to Select Hint -->
-          <div class="mannequin-click-hint" aria-hidden="true">
-            <span>👆</span>
-            <span>상의나 하의를 직접 클릭(터치)하여 기준 옷을 바꿀 수 있습니다</span>
-          </div>
-        </div>
-
-        <!-- Auxiliary Action Toolbar -->
-        <div class="preview-toolbar" role="toolbar" aria-label="코디 조작 도구">
-          <button type="button" id="btnSwap" class="tool-btn primary-tool" title="상의와 하의 색상을 맞바꿉니다">
-            <span>⇄</span>
-            <span>상·하의 반전</span>
-          </button>
-          <button type="button" id="btnShuffle" class="tool-btn" title="베스트 조합 중 랜덤 1세트를 가져옵니다">
-            <span>🎲</span>
-            <span>랜덤 조합</span>
-          </button>
-          <button type="button" id="btnCopy" class="tool-btn" title="현재 코디 조합을 텍스트로 복사합니다">
-            <span>📋</span>
-            <span>코디 복사</span>
-          </button>
-        </div>
-
-        <!-- Color Harmony Meter -->
-        <div class="harmony-status-card">
-          <div class="harmony-info">
-            <span class="harmony-title">현재 배색 스타일 무드</span>
-            <div id="harmonyDesc" class="harmony-desc">
-              <span>✨</span>
-              <span>클래식 캐주얼 정석</span>
-            </div>
-          </div>
-          <div id="harmonyChips" class="harmony-chips">
-            <!-- Dynamically populated chips -->
-          </div>
-        </div>
-      </article>
-
-      <!-- Right Column: Controls & Palette Panel -->
-      <article class="glass-card control-panel">
-
-        <!-- Step 1: Base Target Selection -->
-        <div class="step-section">
-          <div class="step-label-group">
-            <span class="step-title">
-              <span class="step-num">1</span>
-              <span>기준 옷 선택</span>
-            </span>
-            <span class="step-hint">먼저 고를 부위를 터치하세요</span>
-          </div>
-
-          <div class="mode-selector-grid">
-            <button type="button" id="btnModeTop" class="mode-btn active">
-              <span class="mode-icon">👕</span>
-              <span class="mode-title-text">상의 먼저 고르기</span>
-              <span class="mode-subtext">상의 정하고 하의 추천받기</span>
-            </button>
-            <button type="button" id="btnModeBottom" class="mode-btn">
-              <span class="mode-icon">👖</span>
-              <span class="mode-title-text">하의 먼저 고르기</span>
-              <span class="mode-subtext">하의 정하고 상의 추천받기</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 2: Curated Fashion Color Palette by Theme Tabs -->
-        <div class="step-section">
-          <div class="step-label-group">
-            <span class="step-title">
-              <span class="step-num">2</span>
-              <span>컬러 테마 탭 & 팔레트</span>
-            </span>
-            <button type="button" id="btnReset" class="tool-btn reset-btn" title="기본값으로 되돌리기">
-              <span>↺</span>
-              <span>초기화</span>
-            </button>
-          </div>
-
-          <!-- Color Theme Tabs (대표/표준 15종 + 웜톤 + 쿨톤 + 파스텔 + 데님) -->
+          <!-- 우측: 세로 컬러 테마 탭 레일 (대표/표준 + 웜톤 + 쿨톤 + 파스텔 + 데님) -->
           <div class="color-theme-tabs" role="tablist" aria-label="컬러 테마 카테고리 탭">
             <button type="button" class="theme-tab-btn active" data-tab="standard">
               <span class="tab-emoji">🌟</span>
-              <span>대표/표준 (15)</span>
+              <span class="tab-label-full">대표/표준 (15)</span>
+              <span class="tab-label-short">대표</span>
             </button>
             <button type="button" class="theme-tab-btn" data-tab="warm">
               <span class="tab-emoji">🍂</span>
-              <span>웜톤 & 얼씨 (8)</span>
+              <span class="tab-label-full">웜톤 & 얼씨 (9)</span>
+              <span class="tab-label-short">웜톤</span>
             </button>
             <button type="button" class="theme-tab-btn" data-tab="cool">
               <span class="tab-emoji">❄️</span>
-              <span>쿨톤 & 모던 (8)</span>
+              <span class="tab-label-full">쿨톤 & 모던 (9)</span>
+              <span class="tab-label-short">쿨톤</span>
             </button>
             <button type="button" class="theme-tab-btn" data-tab="pastel">
               <span class="tab-emoji">🎨</span>
-              <span>파스텔 & 포인트 (8)</span>
+              <span class="tab-label-full">파스텔 & 포인트 (9)</span>
+              <span class="tab-label-short">파스텔</span>
             </button>
             <button type="button" class="theme-tab-btn" data-tab="denim">
               <span class="tab-emoji">👖</span>
-              <span>데님 & 빈티지 (6)</span>
+              <span class="tab-label-full">데님 & 빈티지 (6)</span>
+              <span class="tab-label-short">데님</span>
             </button>
           </div>
 
-          <div id="paletteGrid" class="palette-grid" role="radiogroup" aria-label="기준 컬러 선택">
-            <!-- Swatches Dynamically Injected for Active Tab -->
-          </div>
         </div>
 
-        <!-- Selected Color Meta Card -->
-        <div class="selected-color-meta">
-          <div id="metaColorPill" class="meta-color-pill" style="background-color: #1B2A4A;"></div>
-          <div class="meta-details">
-            <div class="meta-title-row">
-              <span id="metaColorName" class="meta-color-name">네이비</span>
-              <span id="metaHex" class="meta-hex">#1B2A4A</span>
+        <!-- 하단 보조 툴바 & 배색 무드 (3분할 아래 전폭, 모바일 한눈 배치) -->
+        <div class="mannequin-extra">
+          <!-- Auxiliary Action Toolbar -->
+          <div class="preview-toolbar" role="toolbar" aria-label="코디 조작 도구">
+            <button type="button" id="btnSwap" class="tool-btn primary-tool" title="상의와 하의 색상을 맞바꿉니다">
+              <span>⇄</span>
+              <span>상·하의 반전</span>
+            </button>
+            <button type="button" id="btnShuffle" class="tool-btn" title="베스트 조합 중 랜덤 1세트를 가져옵니다">
+              <span>🎲</span>
+              <span>랜덤 조합</span>
+            </button>
+            <button type="button" id="btnCopy" class="tool-btn" title="현재 코디 조합을 텍스트로 복사합니다">
+              <span>📋</span>
+              <span>코디 복사</span>
+            </button>
+          </div>
+
+          <!-- Color Harmony Meter -->
+          <div class="harmony-status-card">
+            <div class="harmony-info">
+              <span class="harmony-title">현재 배색 스타일 무드</span>
+              <div id="harmonyDesc" class="harmony-desc">
+                <span>✨</span>
+                <span>클래식 캐주얼 정석</span>
+              </div>
             </div>
-            <p id="metaDesc" class="meta-desc">신뢰감과 품격을 전하는 클래식 네이비</p>
+            <div id="harmonyChips" class="harmony-chips">
+              <!-- Dynamically populated chips -->
+            </div>
           </div>
         </div>
-
       </article>
 
     </section>
@@ -314,12 +345,12 @@
       <div class="section-header-box">
         <div class="section-title-wrap">
           <h2 id="recSectionTitle" class="section-title">
-            <span>🎯 선택한 상의</span>
+            <span>선택한 상의</span>
             <span class="target-highlight">[네이비]</span>
-            <span>에 어울리는 하의 추천</span>
+            <span>에 어울리는 하의 5가지 색상입니다</span>
           </h2>
           <p id="recSectionSubtitle" class="section-subtitle">
-            색채학 및 룩룩룩 스타일리스트가 검증한 4~5가지 최적의 매칭 조합입니다.
+            색채학 및 룩룩룩 스타일리스트가 검증한 5가지 추천 매칭 조합입니다.
           </p>
         </div>
         <span class="rec-swipe-hint font-outfit">👈 카드를 옆으로 넘겨보세요</span>
