@@ -517,6 +517,33 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* 추천 컬러 다이나믹 순환 미리보기 연출 (앰버 글로우 펄스) */
+.svg-container-box.is-cycling {
+  animation: cyclingPulse 1.3s ease-in-out infinite;
+}
+
+.svg-container-box.is-cycling::after {
+  content: "추천 미리보기 ✨";
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  font-size: 0.675rem;
+  font-weight: 800;
+  color: #0f172a;
+  background: #fbbf24;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.5);
+  pointer-events: none;
+  z-index: 10;
+  animation: badgePop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cyclingPulse {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4)); }
+  50% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.8)); }
+}
+
 /* SVG Graphic Elements */
 .svg-garment {
   display: block;
@@ -791,59 +818,6 @@ body {
 .step-hint {
   font-size: 0.75rem;
   color: var(--text-muted);
-}
-
-.mode-selector-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
-}
-
-.mode-btn {
-  background: rgba(30, 41, 59, 0.5);
-  border: 2px solid transparent;
-  border-radius: var(--radius-md);
-  padding: 0.85rem 0.75rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-  transition: all var(--transition-fast);
-  min-height: 84px;
-}
-
-.mode-btn:hover {
-  background: rgba(30, 41, 59, 0.85);
-  color: #fff;
-}
-
-.mode-btn.active {
-  background: rgba(56, 189, 248, 0.12);
-  border-color: #38bdf8;
-  color: #ffffff;
-  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.2);
-}
-
-.mode-icon {
-  font-size: 1.5rem;
-}
-
-.mode-title-text {
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.mode-subtext {
-  font-size: 0.725rem;
-  color: var(--text-muted);
-  font-weight: 400;
-  text-align: center;
-}
-
-.mode-btn.active .mode-subtext {
-  color: #7dd3fc;
 }
 
 /* Color Theme Tabs */
@@ -1919,19 +1893,6 @@ body {
     font-size: 0.98rem;
   }
   .brand-slogan-badge {
-    display: none;
-  }
-  .mode-btn {
-    padding: 0.65rem 0.5rem;
-    min-height: 74px;
-  }
-  .mode-icon {
-    font-size: 1.3rem;
-  }
-  .mode-title-text {
-    font-size: 0.825rem;
-  }
-  .mode-subtext {
     display: none;
   }
   .btn-shop-header span.arrow-icon {

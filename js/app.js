@@ -21,6 +21,9 @@ const state = {
   }
 };
 
+// 추천 컬러 다이나믹 순환 미리보기 타이머
+let recCycleTimer = null;
+
 // --- DOM Elements Cache ---
 const DOM = {
   mainPreviewStage: document.getElementById('mainPreviewStage'),
@@ -41,8 +44,6 @@ const DOM = {
   topColorBadge: document.getElementById('topColorBadge'),
   bottomColorBadge: document.getElementById('bottomColorBadge'),
   
-  btnModeTop: document.getElementById('btnModeTop'),
-  btnModeBottom: document.getElementById('btnModeBottom'),
   btnPants: document.getElementById('btnPants'),
   btnSkirt: document.getElementById('btnSkirt'),
   
@@ -245,25 +246,12 @@ function updateGarmentVisuals() {
   }
 
   if (DOM.svgBottomContainer) {
-    DOM.svgBottomContainer.innerHTML = state.bottomType === 'pants' 
+    DOM.svgBottomContainer.innerHTML = state.bottomType === 'pants'
       ? renderPantsSVG(state.selectedBottom.hex)
       : renderSkirtSVG(state.selectedBottom.hex);
   }
 
-  // 플로팅 뱃지 갱신
-  if (DOM.topColorBadge) {
-    DOM.topColorBadge.innerHTML = `
-      <span class="badge-color-dot" style="background-color: ${state.selectedTop.hex};"></span>
-      <span>상의: ${state.selectedTop.name}</span>
-    `;
-  }
-
-  if (DOM.bottomColorBadge) {
-    DOM.bottomColorBadge.innerHTML = `
-      <span class="badge-color-dot" style="background-color: ${state.selectedBottom.hex};"></span>
-      <span>하의: ${state.selectedBottom.name}</span>
-    `;
-  }
+  updateColorOnlyVisuals();
 
   // 상의 / 하의 프리뷰 컨테이너 및 뱃지 활성 하이라이트 반영
   const isTopActive = state.activeMode === 'top';
@@ -282,17 +270,38 @@ function updateGarmentVisuals() {
     DOM.bottomColorBadge.classList.toggle('is-active-target', !isTopActive);
   }
 
-  // 모바일 스티키 바 갱신
-  if (DOM.stickyTopDot) DOM.stickyTopDot.style.backgroundColor = state.selectedTop.hex;
-  if (DOM.stickyTopName) DOM.stickyTopName.textContent = state.selectedTop.name;
-  if (DOM.stickyBottomDot) DOM.stickyBottomDot.style.backgroundColor = state.selectedBottom.hex;
-  if (DOM.stickyBottomName) DOM.stickyBottomName.textContent = state.selectedBottom.name;
-
   // 하의 형태 버튼 활성화 표시
   if (DOM.btnPants && DOM.btnSkirt) {
     DOM.btnPants.classList.toggle('active', state.bottomType === 'pants');
     DOM.btnSkirt.classList.toggle('active', state.bottomType === 'skirt');
   }
+}
+
+/**
+ * 색상만 바뀌었을 때의 경량 갱신 (배지·모바일 스티키 바·하모니)
+ * SVG 전체를 재렌더링하지 않으므로 fill CSS transition으로 색이 부드럽게 변합니다.
+ */
+function updateColorOnlyVisuals() {
+  // 플로팅 뱃지 갱신
+  if (DOM.topColorBadge) {
+    DOM.topColorBadge.innerHTML = `
+      <span class="badge-color-dot" style="background-color: ${state.selectedTop.hex};"></span>
+      <span>상의: ${state.selectedTop.name}</span>
+    `;
+  }
+
+  if (DOM.bottomColorBadge) {
+    DOM.bottomColorBadge.innerHTML = `
+      <span class="badge-color-dot" style="background-color: ${state.selectedBottom.hex};"></span>
+      <span>하의: ${state.selectedBottom.name}</span>
+    `;
+  }
+
+  // 모바일 스티키 바 갱신
+  if (DOM.stickyTopDot) DOM.stickyTopDot.style.backgroundColor = state.selectedTop.hex;
+  if (DOM.stickyTopName) DOM.stickyTopName.textContent = state.selectedTop.name;
+  if (DOM.stickyBottomDot) DOM.stickyBottomDot.style.backgroundColor = state.selectedBottom.hex;
+  if (DOM.stickyBottomName) DOM.stickyBottomName.textContent = state.selectedBottom.name;
 
   // 조화도 & 대비 분석 갱신
   updateHarmonyStatus();
@@ -363,24 +372,43 @@ function updateSelectedColorMeta(color) {
 
 /**
  * 기준 색상 변경 처리 함수
+ * 기준 컬러가 실제로 바뀌면 추천 1순위를 반대편 부위에 즉시 적용하고,
+ * 이어서 5가지 추천 컬러를 차례로 입혀 보여주는 다이나믹 순환 미리보기를 시작합니다.
  */
 function handleSelectBaseColor(colorId) {
   const chosenColor = COLOR_MAP.get(colorId);
   if (!chosenColor) return;
 
-  if (state.activeMode === 'top') {
+  const isTopMode = state.activeMode === 'top';
+  const currentBase = isTopMode ? state.selectedTop : state.selectedBottom;
+  const baseChanged = currentBase.id !== chosenColor.id;
+  const recs = chosenColor.recommendations || [];
+
+  if (isTopMode) {
     state.selectedTop = chosenColor;
-    const currentRec = chosenColor.recommendations.find(r => r.id === state.selectedBottom.id);
-    state.selectedBottom = currentRec || chosenColor.recommendations[0];
+    if (baseChanged) {
+      state.selectedBottom = recs[0] || state.selectedBottom;
+    } else if (!recs.some(r => r.id === state.selectedBottom.id)) {
+      state.selectedBottom = recs[0] || state.selectedBottom;
+    }
   } else {
     state.selectedBottom = chosenColor;
-    const currentRec = chosenColor.recommendations.find(r => r.id === state.selectedTop.id);
-    state.selectedTop = currentRec || chosenColor.recommendations[0];
+    if (baseChanged) {
+      state.selectedTop = recs[0] || state.selectedTop;
+    } else if (!recs.some(r => r.id === state.selectedTop.id)) {
+      state.selectedTop = recs[0] || state.selectedTop;
+    }
   }
 
   updateGarmentVisuals();
   renderPalette();
   renderRecommendations();
+
+  if (baseChanged) {
+    startRecommendationCycle();
+  } else {
+    stopRecommendationCycle();
+  }
 }
 
 /**
@@ -460,6 +488,8 @@ function applyRecommendation(recId) {
 
   if (!targetRec) return;
 
+  stopRecommendationCycle();
+
   if (isTopMode) {
     state.selectedBottom = targetRec;
   } else {
@@ -471,12 +501,103 @@ function applyRecommendation(recId) {
   showToast(`${targetRec.name} 색상이 ${isTopMode ? '하의' : '상의'}에 적용되었습니다!`, '🎨');
 }
 
+// --- 다이나믹 추천 컬러 순환 미리보기 (Auto-Cycle) ---
+
+/**
+ * 추천 카드 목록의 '적용 중' 하이라이트만 갱신 (카드 재렌더링 없이)
+ */
+function updateRecCardActiveState() {
+  if (!DOM.recCardsGrid) return;
+
+  const isTopMode = state.activeMode === 'top';
+  const oppositeColor = isTopMode ? state.selectedBottom : state.selectedTop;
+
+  DOM.recCardsGrid.querySelectorAll('.rec-card').forEach(card => {
+    const isActive = card.getAttribute('data-rec-id') === oppositeColor.id;
+    card.classList.toggle('active', isActive);
+    const applyBtn = card.querySelector('.btn-apply-rec');
+    if (applyBtn) {
+      applyBtn.textContent = isActive ? '✓ 현재 입어보는 중' : '이 색상 입어보기';
+    }
+  });
+}
+
+/**
+ * 반대편 부위 색상을 SVG 재렌더링 없이 부드럽게 변경
+ * (기존 SVG의 fill 속성만 교체해 CSS transition으로 다이나믹한 색 변환 연출)
+ */
+function setOppositeGarmentColor(rec) {
+  const isTopMode = state.activeMode === 'top';
+
+  if (isTopMode) {
+    state.selectedBottom = rec;
+  } else {
+    state.selectedTop = rec;
+  }
+
+  // 기존 SVG가 있으면 fill 속성만 교체 (부드러운 색 전환)
+  const container = isTopMode ? DOM.svgBottomContainer : DOM.svgTopContainer;
+  const fillTarget = container?.querySelector('.garment-fill-target');
+  if (fillTarget) {
+    fillTarget.setAttribute('fill', rec.hex);
+  } else {
+    updateGarmentVisuals();
+  }
+
+  updateColorOnlyVisuals();
+  updateRecCardActiveState();
+}
+
+/**
+ * 추천 컬러 순환 미리보기 종료 (타이머 정리 + 순환 표시 해제)
+ */
+function stopRecommendationCycle() {
+  if (recCycleTimer) {
+    clearInterval(recCycleTimer);
+    recCycleTimer = null;
+  }
+  DOM.svgTopContainer?.classList.remove('is-cycling');
+  DOM.svgBottomContainer?.classList.remove('is-cycling');
+}
+
+/**
+ * 기준 컬러 선택 시, 5가지 추천 컬러를 반대편 부위에 차례로 적용하는
+ * 다이나믹 미리보기 순환 시작 (마지막에 베스트 추천 1순위로 확정)
+ */
+function startRecommendationCycle() {
+  stopRecommendationCycle();
+
+  const isTopMode = state.activeMode === 'top';
+  const baseColor = isTopMode ? state.selectedTop : state.selectedBottom;
+  const recs = baseColor.recommendations || [];
+  if (recs.length <= 1) return;
+
+  const targetContainer = isTopMode ? DOM.svgBottomContainer : DOM.svgTopContainer;
+  targetContainer?.classList.add('is-cycling');
+
+  const STEP_MS = 650;
+  let step = 1; // 0번째(베스트)는 이미 즉시 적용된 상태 → 나머지 4개 순환 후 베스트로 복귀
+
+  recCycleTimer = setInterval(() => {
+    if (step >= recs.length) {
+      stopRecommendationCycle();
+      setOppositeGarmentColor(recs[0]);
+      renderRecommendations();
+      showToast(`추천 미리보기 완료! 가장 잘 어울리는 '${recs[0].name}'를 ${isTopMode ? '하의' : '상의'}에 적용했어요.`, '🎨');
+      return;
+    }
+    setOppositeGarmentColor(recs[step]);
+    step++;
+  }, STEP_MS);
+}
+
 // --- Auxiliary Features (Swap, Shuffle, Copy, Reset) ---
 
 /**
  * 상·하의 색상 맞바꾸기 (Swap)
  */
 function handleSwap() {
+  stopRecommendationCycle();
   const prevTop = state.selectedTop;
   const prevBottom = state.selectedBottom;
 
@@ -496,6 +617,7 @@ function handleSwap() {
  * 랜덤 추천 조합 (Shuffle)
  */
 function handleShuffle() {
+  stopRecommendationCycle();
   const randomBaseIndex = Math.floor(Math.random() * FASHION_COLORS.length);
   const randomBase = FASHION_COLORS[randomBaseIndex];
 
@@ -553,6 +675,7 @@ function fallbackCopy(text) {
  * 초기화 (Reset)
  */
 function handleReset() {
+  stopRecommendationCycle();
   state.activeMode = 'top';
   state.bottomType = 'pants';
   state.activeTab = 'standard';
@@ -563,7 +686,6 @@ function handleReset() {
     btn.classList.toggle('active', btn.dataset.tab === 'standard');
   });
 
-  updateModeButtons();
   updateGarmentVisuals();
   renderPalette();
   renderRecommendations();
@@ -572,17 +694,10 @@ function handleReset() {
 
 // --- Mode & Silhouette Switch Handlers ---
 
-function updateModeButtons() {
-  if (DOM.btnModeTop && DOM.btnModeBottom) {
-    DOM.btnModeTop.classList.toggle('active', state.activeMode === 'top');
-    DOM.btnModeBottom.classList.toggle('active', state.activeMode === 'bottom');
-  }
-}
-
 function setTargetMode(mode) {
   if (state.activeMode === mode) return;
+  stopRecommendationCycle();
   state.activeMode = mode;
-  updateModeButtons();
   updateGarmentVisuals();
   renderPalette();
   renderRecommendations();
@@ -598,10 +713,6 @@ function setBottomType(type) {
 
 // --- Event Listeners Setup ---
 function setupEventListeners() {
-  // 모드 변경 (버튼 클릭)
-  DOM.btnModeTop?.addEventListener('click', () => setTargetMode('top'));
-  DOM.btnModeBottom?.addEventListener('click', () => setTargetMode('bottom'));
-
   // 비주얼 코디 프리뷰에서 상의나 하의를 직접 클릭/터치하여 모드 전환
   DOM.svgTopContainer?.addEventListener('click', () => setTargetMode('top'));
   DOM.topColorBadge?.addEventListener('click', () => setTargetMode('top'));
@@ -710,6 +821,7 @@ function applyQuickSeasonStyle(topId, bottomId, styleName) {
   const bottomColor = COLOR_MAP.get(bottomId);
   if (!topColor || !bottomColor) return;
 
+  stopRecommendationCycle();
   state.selectedTop = topColor;
   state.selectedBottom = bottomColor;
 
@@ -722,7 +834,6 @@ function applyQuickSeasonStyle(topId, bottomId, styleName) {
 // --- App Initialization ---
 function init() {
   setupEventListeners();
-  updateModeButtons();
   updateGarmentVisuals();
   renderPalette();
   renderRecommendations();
