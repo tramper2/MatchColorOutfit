@@ -92,8 +92,35 @@
           <span class="brand-slogan-badge">✨ 옷알못들을 위한 컬러 제안</span>
         </div>
       </a>
+
+      <!-- Desktop GNB Navigation -->
+      <nav class="site-nav" aria-label="주요 서비스 네비게이션">
+        <a href="./" class="nav-link active"><span>🎨</span><span>컬러 스튜디오</span></a>
+        <a href="./daily.html" class="nav-link"><span>📅</span><span>매일 코디</span></a>
+        <a href="./weather.html" class="nav-link"><span>🌤️</span><span>날씨 코디</span></a>
+        <a href="./trip.html" class="nav-link"><span>✈️</span><span>출장·여행</span></a>
+        <a href="./trend.html" class="nav-link"><span>🍂</span><span>시즌 트렌드</span></a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="btn-shop-header" title="룩룩룩 공식 쇼핑몰 이동">
+          <span>룩룩룩 가기</span>
+          <span class="arrow-icon">↗</span>
+        </a>
+      </div>
     </div>
   </header>
+
+  <!-- Mobile Subnav Bar (상단 가로 스크롤 메뉴) -->
+  <nav class="mobile-subnav-bar" aria-label="모바일 서비스 메뉴">
+    <div class="mobile-subnav-inner">
+      <a href="./" class="mobile-subnav-link active">🎨 컬러 스튜디오</a>
+      <a href="./daily.html" class="mobile-subnav-link">📅 매일 코디</a>
+      <a href="./weather.html" class="mobile-subnav-link">🌤️ 날씨 코디</a>
+      <a href="./trip.html" class="mobile-subnav-link">✈️ 출장·여행</a>
+      <a href="./trend.html" class="mobile-subnav-link">🍂 시즌 트렌드</a>
+    </div>
+  </nav>
 
   <!-- ================= Mobile Sticky Quick Preview Bar ================= -->
   <!-- 스크롤 시 화면 상단에 달라붙어 언제든 현재 상/하의 색상을 확인하고 원클릭 스왑/랜덤을 할 수 있는 모바일 전용 플로팅 바 -->
@@ -131,7 +158,7 @@
     <div class="hero-banner-inner">
       <div class="hero-text">
         <span class="hero-icon">👕👖</span>
-        <span>오늘 뭐 입지? 고민 끝! <strong class="hero-highlight">원터치 컬러 매칭</strong>으로 인생 코디 완성</span>
+        <span>오늘 뭐 입지? 고민 끝! <strong class="hero-highlight">비주얼 컬러 매칭</strong>으로 인생 코디 완성</span>
       </div>
       <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="hero-link">
         룩룩룩 신상 보러가기 &rarr;
@@ -143,47 +170,9 @@
   <main class="main-layout">
 
     <!-- 페이지 대표 제목 (검색엔진·스크린리더용, 화면에는 비노출) -->
-    <h1 class="sr-only">MatchFit Color - 옷알못들을 위한 상·하의 컬러 매칭 서비스</h1>
+    <h1 class="sr-only">MatchFit Color - 옷알못들을 위한 비주얼 코디 프리뷰 & 컬러 매칭 스튜디오</h1>
 
-    <!-- ================= 🍁 계절별 트렌드 추천 컬러 (Season Trend Curation) ================= -->
-    <section id="seasonalTrendSection" class="glass-card seasonal-trend-card" aria-label="계절별 트렌드 컬러 큐레이션">
-      <div class="trend-card-header">
-        <div class="trend-badge-group">
-          <span id="seasonBadge" class="season-pill-badge">🍂 2026 가을 시즌 트렌드</span>
-          <span class="season-edit-notice">💡 시즌별 트렌드 큐레이션</span>
-        </div>
-        <h2 id="seasonTitle" class="season-title">올가을 패션 트렌드 컬러 제안</h2>
-        <div class="season-quote-box">
-          <p id="seasonGuideText" class="season-guide-text">
-            “올가을 패션 트렌드 컬러는 세련된 그레이와 깊이감 있는 다크 브라운·카멜, 그리고 과감한 포인트 컬러인 퍼플과 레드”
-          </p>
-          <p id="seasonSubText" class="season-subtext">
-            차분한 계절감 속에 깊이와 감각적인 포인트를 더하는 5가지 핵심 컬러를 마네킹에 직접 피팅해 보세요.
-          </p>
-        </div>
-      </div>
-
-      <!-- Trend Color Swatches -->
-      <div class="trend-colors-wrap">
-        <div class="trend-colors-label">
-          <span>🎨 올시즌 5대 트렌드 컬러</span>
-          <span class="trend-hint">터치하여 마네킹에 바로 입어보기</span>
-        </div>
-        <div id="trendColorChips" class="trend-color-chips">
-          <!-- Dynamically populated from SEASON_CONFIGS in season_trend.js -->
-        </div>
-      </div>
-
-      <!-- 1-Click Season Best Co-ord Sets -->
-      <div class="season-quick-styles-wrap">
-        <span class="quick-styles-label">✨ 원클릭 시즌 베스트 코디:</span>
-        <div id="seasonQuickStyles" class="quick-styles-buttons">
-          <!-- Dynamically populated from SEASON_CONFIGS in season_trend.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Top Grid: Visual Preview Studio + Controls & Palette -->
+    <!-- Top Grid: Visual Preview Studio + Controls & Palette (최상단 메인 배치!) -->
     <section class="matching-studio-grid" aria-label="인터랙티브 컬러 매칭 스튜디오">
 
       <!-- 비주얼 코디 프리뷰 + 컬러 선택 통합 스튜디오 (마네킹 | 팔레트 | 세로 테마 탭) -->
@@ -397,25 +386,29 @@
   </main>
 
   <!-- ================= Mobile Bottom Floating Dock ================= -->
-  <!-- 모바일에서 한 손으로도 언제든 코디를 바꿀 수 있는 하단 플로팅 툴 독 -->
-  <div class="mobile-bottom-dock" aria-label="모바일 하단 빠른 메뉴">
-    <button type="button" id="btnDockSwap" class="dock-btn" title="상·하의 반전">
-      <span class="dock-icon">⇄</span>
-      <span class="dock-label">반전</span>
-    </button>
-    <button type="button" id="btnDockShuffle" class="dock-btn highlight" title="랜덤 조합">
-      <span class="dock-icon">🎲</span>
-      <span class="dock-label">랜덤 코디</span>
-    </button>
-    <button type="button" id="btnDockCopy" class="dock-btn" title="코디 복사">
-      <span class="dock-icon">📋</span>
-      <span class="dock-label">복사</span>
-    </button>
-    <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="dock-btn shop-dock" title="룩룩룩 쇼핑몰">
-      <span class="dock-icon">🛍️</span>
-      <span class="dock-label">룩룩룩</span>
+  <!-- 모바일에서 한 손으로도 5대 주요 기능을 언제든 이동할 수 있는 하단 플로팅 네비게이션 바 -->
+  <nav class="mobile-bottom-dock" aria-label="모바일 하단 네비게이션 바">
+    <a href="./" class="dock-btn active" title="컬러 스튜디오 (메인)">
+      <span class="dock-icon">🎨</span>
+      <span class="dock-label">컬러</span>
     </a>
-  </div>
+    <a href="./daily.html" class="dock-btn" title="매일매일 코디 추천">
+      <span class="dock-icon">📅</span>
+      <span class="dock-label">매일코디</span>
+    </a>
+    <a href="./weather.html" class="dock-btn" title="실시간 날씨 코디">
+      <span class="dock-icon">🌤️</span>
+      <span class="dock-label">날씨코디</span>
+    </a>
+    <a href="./trip.html" class="dock-btn" title="출장·여행 7일 플래너">
+      <span class="dock-icon">✈️</span>
+      <span class="dock-label">출장패킹</span>
+    </a>
+    <a href="./trend.html" class="dock-btn" title="올가을 시즌 트렌드">
+      <span class="dock-icon">🍂</span>
+      <span class="dock-label">트렌드</span>
+    </a>
+  </nav>
 
   <!-- ================= Footer ================= -->
   <footer class="site-footer">

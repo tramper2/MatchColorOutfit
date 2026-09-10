@@ -726,3 +726,415 @@ export const SHOP_INFO = {
 // 계절별 트렌드 설정 모듈 re-export (시즌 변경 시 js/season_trend.js 파일을 수정하세요)
 export * from './season_trend.js';
 
+// =========================================================================
+// 🌤️ 기온별 옷차림 공식 가이드 (8단계 한국 기상청 및 패션 표준)
+// =========================================================================
+export const TEMPERATURE_GUIDES = [
+  {
+    rangeId: "hot_28",
+    minTemp: 28,
+    maxTemp: 99,
+    label: "28℃ 이상",
+    title: "한여름 폭염 날씨",
+    summary: "민소매, 반팔, 반바지, 린넨 소재로 최대한 시원하고 가볍게",
+    tops: ["린넨 셔츠", "쿨링 반팔 티셔츠", "슬리브리스 탑", "오버핏 오픈카라 셔츠"],
+    bottoms: ["린넨 쇼츠", "코튼 버뮤다 팬츠", "시어서커 슬랙스", "얇은 와이드 팬츠"],
+    outer: "없음 (실내 에어컨 대비 얇은 린넨 셔츠 추천)",
+    shoes: ["스트랩 샌들", "가벼운 캔버스화", "우븐 로퍼"],
+    recommendedColors: [
+      { id: "white", name: "화이트", hex: "#FFFFFF", textColor: "#1E1E1E", role: "상·하의 열 반사 베이스" },
+      { id: "sky_blue", name: "스카이 블루", hex: "#87CEEB", textColor: "#1E1E1E", role: "청량한 여름 포인트" },
+      { id: "light_gray", name: "라이트 그레이", hex: "#D3D3D3", textColor: "#1E1E1E", role: "산뜻한 쿨톤 매치" },
+      { id: "light_denim", name: "연청 데님", hex: "#8EAEC4", textColor: "#1E1E1E", role: "경쾌한 캐주얼" }
+    ],
+    stylingTip: "빛을 흡수하는 블랙이나 어두운 색 대신 밝은 화이트, 스카이블루로 체감 온도를 낮추세요."
+  },
+  {
+    rangeId: "warm_23_27",
+    minTemp: 23,
+    maxTemp: 27,
+    label: "23℃ ~ 27℃",
+    title: "초여름 / 쾌적한 낮 기온",
+    summary: "반팔, 얇은 셔츠, 가벼운 면바지나 슬랙스로 단정한 룩",
+    tops: ["옥스포드 반팔 셔츠", "피케 폴로셔츠", "코튼 라운드 티셔츠", "얇은 7부 블라우스"],
+    bottoms: ["테이퍼드 슬랙스", "면 치노팬츠", "라이트 데님", "A라인 린넨 스커트"],
+    outer: "가벼운 포켓 셔츠나 홑겹 바람막이",
+    shoes: ["화이트 스니커즈", "페니 로퍼", "뮬 슬리퍼"],
+    recommendedColors: [
+      { id: "cream", name: "크림 아이보리", hex: "#F4F1EA", textColor: "#1E1E1E", role: "부드럽고 단정한 인상" },
+      { id: "beige", name: "베이지", hex: "#D7C9AA", textColor: "#1E1E1E", role: "치노 팬츠의 정석" },
+      { id: "navy", name: "네이비", hex: "#1B2A4A", textColor: "#FFFFFF", role: "신뢰감 있는 상의" },
+      { id: "sage_green", name: "세이지 민트", hex: "#9CAF88", textColor: "#1E1E1E", role: "내추럴 감성 악센트" }
+    ],
+    stylingTip: "실내 냉방과 아침저녁 약간의 기온 변화에 대비해 얇은 셔츠를 어깨에 걸치는 스타일링이 제격입니다."
+  },
+  {
+    rangeId: "mild_20_22",
+    minTemp: 20,
+    maxTemp: 22,
+    label: "20℃ ~ 22℃",
+    title: "완연한 봄 / 초가을 쾌적 날씨",
+    summary: "얇은 가디건, 긴팔 티셔츠, 셔츠, 면바지로 스타일링하기 가장 좋은 황금 기온",
+    tops: ["롱슬리브 긴팔 티", "드레스 셔츠", "얇은 코튼 가디건", "스트라이프 셔츠"],
+    bottoms: ["슬랙스", "스트레이트 데님", "치노 팬츠", "플리츠 스커트"],
+    outer: "어깨에 걸치는 얇은 가디건 또는 셔츠 재킷",
+    shoes: ["클래식 스니커즈", "더비 슈즈", "플랫 슈즈"],
+    recommendedColors: [
+      { id: "navy", name: "네이비", hex: "#1B2A4A", textColor: "#FFFFFF", role: "깔끔하고 세련된 상·하의" },
+      { id: "melange_gray", name: "멜란지 그레이", hex: "#9E9E9E", textColor: "#1E1E1E", role: "모던 베이직 이너" },
+      { id: "butter_yellow", name: "버터 옐로우", hex: "#F5E8A9", textColor: "#1E1E1E", role: "화사한 봄·가을 무드" },
+      { id: "mid_denim", name: "중청 데님", hex: "#4A709C", textColor: "#FFFFFF", role: "어디에나 어울리는 팬츠" }
+    ],
+    stylingTip: "셔츠 소매를 자연스럽게 롤업하고, 네이비와 베이지 또는 그레이의 톤온톤 조합으로 세련미를 더하세요."
+  },
+  {
+    rangeId: "cool_17_19",
+    minTemp: 17,
+    maxTemp: 19,
+    label: "17℃ ~ 19℃",
+    title: "선선한 봄가을 / 일교차 주의",
+    summary: "얇은 니트, 맨투맨, 가디건, 슬랙스로 든든함과 핏을 동시에",
+    tops: ["파인 울 니트", "헤비웨이트 맨투맨", "옥스포드 셔츠 + 조끼", "후드 티셔츠"],
+    bottoms: ["울 블렌드 슬랙스", "중청/진청 데님", "코튼 조거팬츠", "롱 스커트"],
+    outer: "도톰한 니트 가디건, 홑겹 블레이저, 가벼운 블루종",
+    shoes: ["레더 스니커즈", "로퍼", "워커 부츠"],
+    recommendedColors: [
+      { id: "olive_khaki", name: "올리브 카키", hex: "#556B2F", textColor: "#FFFFFF", role: "가을 무드 대표" },
+      { id: "camel", name: "카멜", hex: "#C19A6B", textColor: "#1E1E1E", role: "포근하고 럭셔리한 느낌" },
+      { id: "charcoal", name: "차콜 그레이", hex: "#383B3E", textColor: "#FFFFFF", role: "단정한 슬랙스 기본" },
+      { id: "burgundy", name: "딥 버건디", hex: "#6B1D2F", textColor: "#FFFFFF", role: "그윽한 포인트" }
+    ],
+    stylingTip: "낮과 밤의 기온 차가 10도 이상 벌어지므로, 이너 위에 편하게 벗고 입을 수 있는 가디건이나 자켓을 꼭 챙기세요."
+  },
+  {
+    rangeId: "chilly_12_16",
+    minTemp: 12,
+    maxTemp: 16,
+    label: "12℃ ~ 16℃",
+    title: "쌀쌀한 환절기 / 자켓 필수",
+    summary: "자켓, 가디건, 야상점퍼, 니트, 도톰한 청바지로 보온성 챙기기",
+    tops: ["메리노 울 니트", "기모 맨투맨", "모크넥 티셔츠", "도톰한 플란넬 셔츠"],
+    bottoms: ["테일러드 울 슬랙스", "진청 데님", "코듀로이 골덴 팬츠"],
+    outer: "테일러드 자켓, 항공점퍼(MA-1), 라이더 자켓, 야상",
+    shoes: ["첼시 부츠", "더비 슈즈", "헤비 스니커즈"],
+    recommendedColors: [
+      { id: "dark_brown", name: "다크 브라운", hex: "#4A3525", textColor: "#FFFFFF", role: "깊이감 있는 자켓/코트" },
+      { id: "deep_denim", name: "생지/진청 데님", hex: "#223554", textColor: "#FFFFFF", role: "단단하고 따뜻한 하의" },
+      { id: "cream", name: "크림 아이보리", hex: "#F4F1EA", textColor: "#1E1E1E", role: "어두운 외투를 밝히는 이너" },
+      { id: "mocha", name: "모카 브라운", hex: "#7E5E4E", textColor: "#FFFFFF", role: "따스한 가을 블렌딩" }
+    ],
+    stylingTip: "블레이저 안에 얇은 터틀넥이나 셔츠+니트 레이어드로 격식과 보온을 동시에 잡으세요."
+  },
+  {
+    rangeId: "cold_9_11",
+    minTemp: 9,
+    maxTemp: 11,
+    label: "9℃ ~ 11℃",
+    title: "초겨울 / 늦가을 쌀쌀함",
+    summary: "트렌치코트, 야상, 도톰한 점퍼, 기모바지로 체온 유지",
+    tops: ["터틀넥 니트", "캐시미어 니트", "도톰한 후드집업", "기모 셔츠"],
+    bottoms: ["기모 슬랙스", "와이드 골덴 팬츠", "헤비웨이트 데님"],
+    outer: "울 트렌치코트, 퀼팅 자켓, 숏패딩, 도톰한 울 블루종",
+    shoes: ["레더 첼시 부츠", "보온 라이닝 스니커즈", "처카 부츠"],
+    recommendedColors: [
+      { id: "charcoal", name: "차콜 그레이", hex: "#383B3E", textColor: "#FFFFFF", role: "슬림하고 묵직한 베이스" },
+      { id: "camel", name: "카멜", hex: "#C19A6B", textColor: "#1E1E1E", role: "트렌치코트의 정석 컬러" },
+      { id: "black", name: "블랙", hex: "#1E1E1E", textColor: "#FFFFFF", role: "시크한 방한 베이스" },
+      { id: "wine", name: "와인 버건디", hex: "#581825", textColor: "#FFFFFF", role: "포근한 겨울 포인트" }
+    ],
+    stylingTip: "목과 발목을 따뜻하게 감싸는 것만으로도 체감 온도가 3도 이상 상승합니다. 앵클부츠와 목폴라를 적극 활용하세요."
+  },
+  {
+    rangeId: "very_cold_5_8",
+    minTemp: 5,
+    maxTemp: 8,
+    label: "5℃ ~ 8℃",
+    title: "겨울 초입 추위",
+    summary: "울 코트, 가죽 자켓, 히트텍 이너웨어, 도톰한 기모 팬츠",
+    tops: ["두꺼운 터틀넥 스웨터", "히트텍 + 셔츠 + 니트", "플리스 집업"],
+    bottoms: ["본딩 기모 슬랙스", "두꺼운 코듀로이 팬츠", "기모 데님"],
+    outer: "핸드메이드 울 코트, 무스탕, 헤비 울 점퍼, 경량 패딩 레이어드",
+    shoes: ["방한 안감 부츠", "레더 첼시 부츠", "쿠션감 있는 운동화"],
+    recommendedColors: [
+      { id: "black", name: "블랙", hex: "#1E1E1E", textColor: "#FFFFFF", role: "롱코트와 자켓의 중심" },
+      { id: "charcoal", name: "차콜 그레이", hex: "#383B3E", textColor: "#FFFFFF", role: "도시적인 헤비 울" },
+      { id: "forest_green", name: "포레스트 그린", hex: "#2E4A35", textColor: "#FFFFFF", role: "중후하고 고급스러운 무드" },
+      { id: "cream", name: "크림 아이보리", hex: "#F4F1EA", textColor: "#1E1E1E", role: "칙칙함을 걷어내는 니트" }
+    ],
+    stylingTip: "코트 안에 경량 패딩 베스트(조끼)를 레이어드하면 부해 보이지 않으면서도 완벽한 방한 룩을 완성할 수 있습니다."
+  },
+  {
+    rangeId: "freezing_under_4",
+    minTemp: -99,
+    maxTemp: 4,
+    label: "4℃ 이하",
+    title: "한겨울 혹한 / 영하권",
+    summary: "롱패딩, 두꺼운 다운점퍼, 목도리, 장갑, 기모 안감 총동원",
+    tops: ["극세사 기모 이너", "헤비 게이지 터틀넥", "캐시미어 혼방 도톰 니트"],
+    bottoms: ["방풍 기모 팬츠", "방한 패딩 바지", "극세사 타이즈 + 울 슬랙스"],
+    outer: "구스다운 롱패딩, 헤비 다운 파카, 시어링 무스탕 코트",
+    shoes: ["방한 부츠", "어그 부츠", "두꺼운 양말 + 워커"],
+    recommendedColors: [
+      { id: "black", name: "블랙", hex: "#1E1E1E", textColor: "#FFFFFF", role: "오염에 강하고 열을 모으는 패딩" },
+      { id: "navy", name: "네이비", hex: "#1B2A4A", textColor: "#FFFFFF", role: "포멀한 윈터 아우터" },
+      { id: "white", name: "화이트 / 오프화이트", hex: "#F8F9FA", textColor: "#1E1E1E", role: "눈 덮인 겨울 스노우룩" },
+      { id: "red", name: "클래식 레드", hex: "#B32638", textColor: "#FFFFFF", role: "머플러·장갑 활력 포인트" }
+    ],
+    stylingTip: "패딩이 무채색(블랙·차콜)이라면, 레드나 카멜 컬러의 머플러를 포인트로 둘러주면 생기 넘치는 윈터 룩이 됩니다."
+  }
+];
+
+// =========================================================================
+// 🌐 WMO 날씨 코드 매핑 (Open-Meteo 표준)
+// =========================================================================
+export const WMO_WEATHER_CODES = {
+  0: { label: "맑음", emoji: "☀️", bgMood: "sunny", advice: "햇살이 좋은 날! 밝고 화사한 컬러가 돋보입니다." },
+  1: { label: "대체로 맑음", emoji: "🌤️", bgMood: "mostly-sunny", advice: "야외 활동하기 완벽한 날씨입니다." },
+  2: { label: "구름 조금", emoji: "⛅", bgMood: "partly-cloudy", advice: "일교차에 유의하여 덧입을 옷을 챙기세요." },
+  3: { label: "흐림", emoji: "☁️", bgMood: "overcast", advice: "차분한 톤온톤이나 포인트 컬러로 기분을 전환해보세요." },
+  45: { label: "안개", emoji: "🌫️", bgMood: "foggy", advice: "시야가 뿌옇고 습도가 높으니 통기성 있는 옷차림 추천." },
+  48: { label: "결빙 안개", emoji: "🌫️", bgMood: "foggy", advice: "체감 온도가 뚝 떨어지니 방한에 신경 쓰세요." },
+  51: { label: "약한 이슬비", emoji: "🌦️", bgMood: "rainy", advice: "빗물이 튈 수 있으니 어두운 하의를 권장합니다." },
+  53: { label: "이슬비", emoji: "🌦️", bgMood: "rainy", advice: "휴대용 우산과 방수 소재 외투를 챙기세요." },
+  55: { label: "강한 이슬비", emoji: "🌧️", bgMood: "rainy", advice: "밝은 색 바지는 오염되기 쉬우니 피하세요." },
+  61: { label: "약한 비", emoji: "🌧️", bgMood: "rainy", advice: "흙탕물에 강한 짙은 네이비나 블랙 하의를 추천합니다." },
+  63: { label: "보통 비", emoji: "🌧️", bgMood: "rainy", advice: "우산과 방수 신발은 필수! 어두운 하의 + 밝은 상의 매칭." },
+  65: { label: "강한 비", emoji: "⛈️", bgMood: "heavy-rain", advice: "비바람에 대비해 밑단이 넓은 바지나 롱스커트는 피하세요." },
+  71: { label: "약한 눈", emoji: "🌨️", bgMood: "snowy", advice: "미끄럼 방지 신발과 포근한 머플러를 코디하세요." },
+  73: { label: "보통 눈", emoji: "❄️", bgMood: "snowy", advice: "방한 방수 부츠와 도톰한 다운 패딩이 필수입니다." },
+  75: { label: "강한 눈 / 대설", emoji: "☃️", bgMood: "heavy-snow", advice: "보온성 최우선! 히트텍과 롱패딩으로 완전 무장하세요." },
+  80: { label: "소나기", emoji: "🌦️", bgMood: "rainy", advice: "갑작스러운 비에 대비해 가벼운 방풍 자켓 추천." },
+  81: { label: "강한 소나기", emoji: "⛈️", bgMood: "heavy-rain", advice: "물기에 강한 레더나 나일론 소재를 선택하세요." },
+  82: { label: "폭우성 소나기", emoji: "⛈️", bgMood: "heavy-rain", advice: "야외 외출 시 짙은 색상의 짧은 기장 팬츠 추천." },
+  95: { label: "뇌우", emoji: "⚡", bgMood: "storm", advice: "바람과 비에 대비해 실용적인 아웃도어 룩 추천." }
+};
+
+// =========================================================================
+// 📍 국내 주요 도시 좌표 데이터 (Open-Meteo 즉각 조회용)
+// =========================================================================
+export const DOMESTIC_CITIES = [
+  { id: "seoul", name: "서울", lat: 37.5665, lon: 126.9780, region: "수도권" },
+  { id: "busan", name: "부산", lat: 35.1796, lon: 129.0756, region: "영남" },
+  { id: "incheon", name: "인천", lat: 37.4563, lon: 126.7052, region: "수도권" },
+  { id: "daegu", name: "대구", lat: 35.8714, lon: 128.6014, region: "영남" },
+  { id: "daejeon", name: "대전", lat: 36.3504, lon: 127.3845, region: "충청" },
+  { id: "gwangju", name: "광주", lat: 35.1595, lon: 126.8526, region: "호남" },
+  { id: "ulsan", name: "울산", lat: 35.5384, lon: 129.3114, region: "영남" },
+  { id: "suwon", name: "수원", lat: 37.2636, lon: 127.0286, region: "수도권" },
+  { id: "jeju", name: "제주", lat: 33.4996, lon: 126.5312, region: "제주" },
+  { id: "gangneung", name: "강릉", lat: 37.7519, lon: 128.8761, region: "강원" },
+  { id: "chuncheon", name: "춘천", lat: 37.8813, lon: 127.7298, region: "강원" },
+  { id: "jeonju", name: "전주", lat: 35.8242, lon: 127.1480, region: "호남" }
+];
+
+// =========================================================================
+// ✈️ 국내외 출장 및 여행 도시 리스트 (7일 예보 플래너용)
+// =========================================================================
+export const TRIP_CITIES = [
+  // 국내 주요 출장/휴양지
+  { id: "seoul", name: "서울", country: "한국", flag: "🇰🇷", lat: 37.5665, lon: 126.9780, type: "domestic" },
+  { id: "busan", name: "부산", country: "한국", flag: "🇰🇷", lat: 35.1796, lon: 129.0756, type: "domestic" },
+  { id: "jeju", name: "제주", country: "한국", flag: "🇰🇷", lat: 33.4996, lon: 126.5312, type: "domestic" },
+  { id: "gangneung", name: "강릉/속초", country: "한국", flag: "🇰🇷", lat: 37.7519, lon: 128.8761, type: "domestic" },
+  
+  // 아시아 주요 출장 & 여행지
+  { id: "tokyo", name: "도쿄", country: "일본", flag: "🇯🇵", lat: 35.6762, lon: 139.6503, type: "asia" },
+  { id: "osaka", name: "오사카", country: "일본", flag: "🇯🇵", lat: 34.6937, lon: 135.5023, type: "asia" },
+  { id: "fukuoka", name: "후쿠오카", country: "일본", flag: "🇯🇵", lat: 33.5904, lon: 130.4017, type: "asia" },
+  { id: "taipei", name: "타이베이", country: "대만", flag: "🇹🇼", lat: 25.0330, lon: 121.5654, type: "asia" },
+  { id: "hongkong", name: "홍콩", country: "중국", flag: "🇭🇰", lat: 22.3193, lon: 114.1694, type: "asia" },
+  { id: "singapore", name: "싱가포르", country: "싱가포르", flag: "🇸🇬", lat: 1.3521, lon: 103.8198, type: "asia" },
+  { id: "bangkok", name: "방콕", country: "태국", flag: "🇹🇭", lat: 13.7563, lon: 100.5018, type: "asia" },
+  { id: "danang", name: "다낭", country: "베트남", flag: "🇻🇳", lat: 16.0544, lon: 108.2022, type: "asia" },
+  
+  // 미주 / 유럽 / 대양주
+  { id: "newyork", name: "뉴욕", country: "미국", flag: "🇺🇸", lat: 40.7128, lon: -74.0060, type: "global" },
+  { id: "losangeles", name: "로스앤젤레스", country: "미국", flag: "🇺🇸", lat: 34.0522, lon: -118.2437, type: "global" },
+  { id: "london", name: "런던", country: "영국", flag: "🇬🇧", lat: 51.5074, lon: -0.1278, type: "global" },
+  { id: "paris", name: "파리", country: "프랑스", flag: "🇫🇷", lat: 48.8566, lon: 2.3522, type: "global" },
+  { id: "frankfurt", name: "프랑크푸르트", country: "독일", flag: "🇩🇪", lat: 50.1109, lon: 8.6821, type: "global" },
+  { id: "sydney", name: "시드니", country: "호주", flag: "🇦🇺", lat: -33.8688, lon: 151.2093, type: "global" }
+];
+
+// =========================================================================
+// 📅 매일매일 코디 추천 데이터 (TPO & 요일 테마)
+// =========================================================================
+export const DAILY_OUTFITS = [
+  {
+    id: "office_navy_beige",
+    tpo: "office",
+    tpoName: "출근 / 비즈니스",
+    title: "신뢰감을 주는 단정한 출근룩",
+    subtitle: "회의와 외근에서도 깔끔한 인상을 남기는 클래식 포멀",
+    topId: "navy",
+    topName: "네이비",
+    bottomId: "beige",
+    bottomName: "베이지",
+    vibe: "비즈니스 캐주얼의 정석",
+    keyItem: "슬림핏 네이비 자켓 & 테이퍼드 치노팬츠",
+    stylingPoints: [
+      "네이비 자켓이나 셔츠에 단정한 베이지 슬랙스를 매치해 군더더기 없는 실루엣 완성",
+      "브라운 가죽 시계와 로퍼를 더해 지적이고 전문적인 분위기 연출",
+      "룩룩룩 프리미엄 슬랙스와 코디 시 구김 없이 하루 종일 쾌적함 유지"
+    ]
+  },
+  {
+    id: "office_charcoal_cream",
+    tpo: "office",
+    tpoName: "출근 / 비즈니스",
+    title: "도회적인 모던 비즈니스룩",
+    subtitle: "차분하면서도 얼굴을 밝혀주는 지적인 오피스 스타일",
+    topId: "cream",
+    topName: "크림 아이보리",
+    bottomId: "charcoal",
+    bottomName: "차콜 그레이",
+    vibe: "도심 속 어반 시크",
+    keyItem: "소프트 크림 니트 & 핀턱 차콜 슬랙스",
+    stylingPoints: [
+      "묵직한 차콜 하의가 전체적인 중심을 잡아주어 슬림해 보이는 효과",
+      "상체에 밝은 크림 컬러를 매치해 화상 회의나 미팅 시 혈색을 환하게 밝힘",
+      "블랙 옥스포드화나 펌프스와 매치하면 격식 있는 자리에서도 완벽"
+    ]
+  },
+  {
+    id: "casual_denim_olive",
+    tpo: "casual",
+    tpoName: "데일리 / 캠퍼스",
+    title: "감성적인 얼씨 캐주얼 데일리",
+    subtitle: "꾸안꾸 매력으로 편안하면서도 센스 있어 보이는 데일리 코디",
+    topId: "olive_khaki",
+    topName: "올리브 카키",
+    bottomId: "mid_denim",
+    bottomName: "중청 데님",
+    vibe: "자연스러운 아메카지 무드",
+    keyItem: "오버핏 카키 맨투맨/야상 & 와이드 데님",
+    stylingPoints: [
+      "차분한 올리브 카키 톤과 청량한 중청 데님의 환상적인 캐주얼 배색",
+      "이너로 화이트 티셔츠를 살짝 레이어드하여 밑단에 흰색 한 줄을 노출",
+      "화이트 캔버스 스니커즈와 에코백으로 편안한 무드 완성"
+    ]
+  },
+  {
+    id: "casual_gray_black",
+    tpo: "casual",
+    tpoName: "데일리 / 캠퍼스",
+    title: "실패 없는 미니멀 시크 룩",
+    subtitle: "언제 어디서나 호불호 없이 사랑받는 모노톤 정석",
+    topId: "melange_gray",
+    topName: "멜란지 그레이",
+    bottomId: "black",
+    bottomName: "블랙",
+    vibe: "미니멀리즘의 정수",
+    keyItem: "그레이 루즈핏 니트 & 블랙 와이드 슬랙스",
+    stylingPoints: [
+      "멜란지 특유의 질감이 단조로움을 없애주고 고급스러움을 부여",
+      "올블랙보다 훨씬 부드럽고 친근하면서도 세련된 인상",
+      "실버 액세서리와 미니멀한 스니커즈로 군더더기 없는 마무리"
+    ]
+  },
+  {
+    id: "date_camel_brown",
+    tpo: "date",
+    tpoName: "데이트 / 소개팅",
+    title: "포근하고 로맨틱한 웜 브라운 톤온톤",
+    subtitle: "따뜻하고 다정한 인상을 주어 첫인상 점수 200% 상승",
+    topId: "camel",
+    topName: "카멜",
+    bottomId: "dark_brown",
+    bottomName: "다크 브라운",
+    vibe: "포근한 어텀 로맨스",
+    keyItem: "캐시미어 카멜 니트 & 초콜릿 브라운 팬츠/스커트",
+    stylingPoints: [
+      "동일한 브라운 계열의 명도 차이를 활용한 완벽한 톤온톤 스타일링",
+      "보는 사람마저 따스하고 포근해지는 부드러운 분위기",
+      "가죽 미니백과 은은한 향수를 더하면 완벽한 데이트룩"
+    ]
+  },
+  {
+    id: "date_butter_denim",
+    tpo: "date",
+    tpoName: "데이트 / 소개팅",
+    title: "사랑스러운 화사한 피크닉 데이트",
+    subtitle: "봄 햇살처럼 싱그럽고 활력 넘치는 인스타 감성 룩",
+    topId: "butter_yellow",
+    topName: "버터 옐로우",
+    bottomId: "light_denim",
+    bottomName: "연청 데님",
+    vibe: "화사하고 러블리한 감성",
+    keyItem: "소프트 버터 가디건 & 크롭 연청 팬츠",
+    stylingPoints: [
+      "과하지 않은 부드러운 버터 톤이 피부 톤을 화사하게 톤업",
+      "연청 데님의 산뜻함이 더해져 사진이 가장 잘 나오는 컬러 조합",
+      "화이트 스니커즈와 앙증맞은 미니 숄더백 추천"
+    ]
+  },
+  {
+    id: "formal_black_cream",
+    tpo: "formal",
+    tpoName: "격식 / 하객룩",
+    title: "품격 있는 흑백 앙상블",
+    subtitle: "결혼식, 호텔 디너, 중요한 프레젠테이션을 위한 단정함",
+    topId: "black",
+    topName: "블랙",
+    bottomId: "cream",
+    bottomName: "크림 아이보리",
+    vibe: "하이엔드 모던 클래식",
+    keyItem: "테일러드 블랙 블레이저 & 크림 와이드 슬랙스",
+    stylingPoints: [
+      "선명한 콘트라스트로 또렷하고 자신감 넘치는 실루엣 형성",
+      "하의를 크림색으로 두어 무겁지 않고 우아한 분위기 유지",
+      "심플한 골드 이어링이나 진주 악센트로 고급스러움 극대화"
+    ]
+  },
+  {
+    id: "onemile_gray_gray",
+    tpo: "onemile",
+    tpoName: "원마일웨어 / 힐링",
+    title: "트렌디한 멜란지 셋업 이지룩",
+    subtitle: "집 근처 카페나 산책, 공항에서도 멋스러운 원마일웨어",
+    topId: "melange_gray",
+    topName: "멜란지 그레이",
+    bottomId: "charcoal",
+    bottomName: "차콜 그레이",
+    vibe: "스타일리시 컴포트",
+    keyItem: "헤비 멜란지 스웨트셔츠 & 차콜 스웨트 조거팬츠",
+    stylingPoints: [
+      "상·하의의 그레이 톤을 살짝 다르게 매치해 후줄근해 보이지 않는 셋업 룩",
+      "볼캡(야구모자)과 두툼한 삭스에 스니커즈를 매치하면 트렌디한 스트릿 감성",
+      "가벼운 패딩 조끼를 걸쳐주면 보온성까지 완벽"
+    ]
+  }
+];
+
+// 요일별 추천 테마
+export const WEEKDAY_THEMES = [
+  { day: 0, name: "일요일", mood: "재충전 & 여유로운 브런치", recommendTpo: "onemile", tip: "편안한 핏의 코디로 한 주를 차분하게 마무리하세요." },
+  { day: 1, name: "월요일", mood: "월요병 극복! 당당한 출근", recommendTpo: "office", tip: "신뢰감을 주는 네이비나 단정한 모노톤으로 활기찬 한 주를 시작하세요." },
+  { day: 2, name: "화요일", mood: "집중과 몰입의 업무 데이", recommendTpo: "office", tip: "구김 없는 편안한 슬랙스와 셔츠로 업무 효율을 높이세요." },
+  { day: 3, name: "수요일", mood: "한 주의 중간, 캐주얼 데이", recommendTpo: "casual", tip: "산뜻한 카키나 데님으로 기분 전환을 시도해보세요." },
+  { day: 4, name: "목요일", mood: "세련된 도심 속 비즈니스", recommendTpo: "office", tip: "차콜과 크림의 모던한 조합으로 프로페셔널한 인상을 남기세요." },
+  { day: 5, name: "금요일", mood: "설레는 불금 & 퇴근길 약속", recommendTpo: "date", tip: "오피스에서도 어울리고 저녁 약속에서도 빛나는 스마트 캐주얼!" },
+  { day: 6, name: "토요일", mood: "자유로운 주말 나들이 & 데이트", recommendTpo: "date", tip: "사진이 잘 나오는 화사한 컬러 조합으로 주말을 만끽하세요." }
+];
+
+// =========================================================================
+// 🧳 7일 출장·여행 캡슐 옷장 패킹 공식 (Capsule Packing Formula)
+// =========================================================================
+export const CAPSULE_PACKING_GUIDE = {
+  rule: "3-3-2 공식 (상의 3~4벌 + 하의 2~3벌 + 아우터 1~2벌로 7일 완성)",
+  description: "모든 상의와 하의가 서로 교차 코디될 수 있는 '뉴트럴 컬러(네이비, 그레이, 베이지, 크림, 블랙)'를 베이스로 패킹하면 캐리어 무게는 절반, 코디는 2배가 됩니다.",
+  checklistItems: [
+    { id: "top_neutral", category: "tops", name: "베이직 뉴트럴 상의 2벌 (화이트/크림/그레이)", count: "2벌", essential: true },
+    { id: "top_color", category: "tops", name: "포인트 상의 1~2벌 (네이비/카멜/소프트블루)", count: "1~2벌", essential: true },
+    { id: "bottom_dress", category: "bottoms", name: "단정한 슬랙스/치노팬츠 (네이비 또는 차콜)", count: "1벌", essential: true },
+    { id: "bottom_casual", category: "bottoms", name: "편안한 데님 또는 면바지 (중청/베이지)", count: "1벌", essential: true },
+    { id: "outer_base", category: "outers", name: "만능 아우터 1벌 (테일러드 자켓 또는 가디건)", count: "1벌", essential: true },
+    { id: "outer_extra", category: "outers", name: "보온/우천 대비 서브 아우터 (트렌치코트 or 바람막이)", count: "1벌", essential: false },
+    { id: "shoes_comfy", category: "shoes", name: "많이 걸어도 편한 단정한 스니커즈 (화이트/블랙)", count: "1켤레", essential: true },
+    { id: "shoes_formal", category: "shoes", name: "격식용 로퍼 또는 더비 슈즈", count: "1켤레", essential: false },
+    { id: "acc_belt", category: "accessories", name: "뉴트럴 가죽 벨트 & 시계", count: "1세트", essential: true },
+    { id: "acc_umbrella", category: "accessories", name: "휴대용 초경량 3단 우산 (비 올 확률 대비)", count: "1개", essential: true }
+  ]
+};
+
+

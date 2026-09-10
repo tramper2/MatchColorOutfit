@@ -862,8 +862,39 @@ function applyQuickSeasonStyle(topId, bottomId, styleName) {
   showToast(`시즌 베스트 코디 [${styleName}]을 마네킹에 피팅했습니다!`, '✨');
 }
 
+// --- URL Parameters Handling (타 페이지에서 마네킹 피팅 연동) ---
+function handleUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  const topId = params.get('top');
+  const bottomId = params.get('bottom');
+  let updated = false;
+
+  if (topId && COLOR_MAP.has(topId)) {
+    state.selectedTop = COLOR_MAP.get(topId);
+    if (state.selectedTop.tab) {
+      state.activeTab = state.selectedTop.tab;
+      DOM.themeTabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === state.activeTab));
+    }
+    updated = true;
+  }
+
+  if (bottomId && COLOR_MAP.has(bottomId)) {
+    state.selectedBottom = COLOR_MAP.get(bottomId);
+    updated = true;
+  } else if (updated && state.selectedTop.recommendations && state.selectedTop.recommendations.length > 0) {
+    state.selectedBottom = state.selectedTop.recommendations[0];
+  }
+
+  if (updated) {
+    setTimeout(() => {
+      showToast(`추천 코디 [${state.selectedTop.name} + ${state.selectedBottom.name}]를 마네킹에 피팅했습니다!`, '✨');
+    }, 300);
+  }
+}
+
 // --- App Initialization ---
 function init() {
+  handleUrlParams();
   setupEventListeners();
   syncPaletteScrollHeight();
   updateGarmentVisuals();
