@@ -211,7 +211,7 @@ body {
    ========================================================================== */
 .mobile-sticky-bar {
   position: sticky;
-  top: 57px;
+  top: var(--header-actual-height, 64px);
   z-index: 45;
   background: rgba(15, 23, 42, 0.94);
   backdrop-filter: blur(14px);
@@ -2079,12 +2079,95 @@ body {
 }
 
 @media (max-width: 768px) {
+  .site-header {
+    padding: 0.6rem 0.85rem;
+  }
+  .brand-logo-img {
+    height: 32px;
+  }
+  .brand-title {
+    font-size: 1.05rem;
+  }
+  .btn-shop-header {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+  }
+
   .mobile-bottom-dock {
     display: flex;
   }
   .mobile-sticky-bar {
     display: block;
+    top: var(--header-actual-height, 78px);
+    padding: 0.35rem 0.75rem;
   }
+
+  .mobile-sticky-inner {
+    gap: 0.4rem;
+  }
+
+  /* 스마트폰 전용: 외투, 이너, 하의 칩을 세로(Column) 초슬림 미니 스택으로 정렬 */
+  .sticky-preview-chips {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .sticky-chip {
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    line-height: 1.25;
+    gap: 0.28rem;
+    background: rgba(30, 41, 59, 0.88);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .chip-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    min-width: 22px;
+    color: #94a3b8;
+  }
+
+  .chip-color-dot {
+    width: 9px;
+    height: 9px;
+  }
+
+  .chip-name {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    max-width: 105px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* 세로 정렬 시 불필요한 '+' 구분자 완전 숨김 */
+  .chip-divider {
+    display: none !important;
+  }
+
+  .sticky-actions {
+    gap: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .btn-sticky-action {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+
+  .btn-sticky-shop {
+    font-size: 0.68rem;
+    padding: 0.25rem 0.45rem;
+  }
+
   .rec-swipe-hint {
     display: inline-block;
   }
@@ -2149,6 +2232,18 @@ body {
   }
   .btn-shop-header span.arrow-icon {
     display: none;
+  }
+  /* 초소형 스마트폰 스티키 바 최적화 */
+  .sticky-chip {
+    padding: 1px 4px;
+    font-size: 0.65rem;
+  }
+  .chip-name {
+    max-width: 75px;
+  }
+  .btn-sticky-shop {
+    padding: 0.2rem 0.35rem;
+    font-size: 0.65rem;
   }
 }
 
@@ -2238,6 +2333,8 @@ body {
   }
   .mobile-subnav-bar {
     display: flex;
+    position: relative;
+    top: auto;
   }
 }
 

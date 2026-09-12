@@ -615,6 +615,17 @@ function renderPalette() {
 }
 
 /**
+ * 상단 헤더의 실제 높이를 감지하여 모바일 스티키 바의 top 위치를 완벽하게 동기화
+ */
+function syncStickyBarTopOffset() {
+  const header = document.querySelector('.site-header');
+  if (header) {
+    const h = header.offsetHeight;
+    document.documentElement.style.setProperty('--header-actual-height', `${h}px`);
+  }
+}
+
+/**
  * 팔레트 스크롤 영역 높이를 마네킹 존 높이와 동일하게 동기화
  */
 function syncPaletteScrollHeight() {
@@ -1326,9 +1337,13 @@ function setupEventListeners() {
     });
   });
 
-  // 팔레트 스크롤 높이를 마네킹 존에 동기화 (리사이즈/폰트 로드 시 재계산)
-  window.addEventListener('resize', syncPaletteScrollHeight);
-  window.addEventListener('load', syncPaletteScrollHeight);
+  // 팔레트 스크롤 높이 및 상단 헤더 높이를 동기화 (리사이즈/폰트 로드 시 재계산)
+  const handleSyncLayout = () => {
+    syncPaletteScrollHeight();
+    syncStickyBarTopOffset();
+  };
+  window.addEventListener('resize', handleSyncLayout);
+  window.addEventListener('load', handleSyncLayout);
 }
 
 // --- Seasonal Trend Recommendation Logic ---
@@ -1473,6 +1488,7 @@ function init() {
   handleUrlParams();
   setupEventListeners();
   syncPaletteScrollHeight();
+  syncStickyBarTopOffset();
   updateGarmentVisuals();
   renderPalette();
   renderRecommendations();
