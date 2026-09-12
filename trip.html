@@ -11,17 +11,17 @@
   <meta name="format-detection" content="telephone=no">
 
   <!-- SEO Meta Tags -->
-  <title>출장·여행 일주일치 날씨 & 의상 플래너 | MatchFit Color - 룩룩룩</title>
-  <meta name="description" content="국내외 출장이나 여행 갈 나라/지역의 7일간 일별 날씨와 기온을 확인하고, 짐을 획기적으로 줄여주는 캡슐 옷장 패킹 체크리스트와 7일 코디 플랜을 제공합니다.">
-  <meta name="keywords" content="출장 코디, 여행 옷차림, 일주일 날씨 옷차림, 해외출장 짐싸기, 캡슐 옷장, 캐리어 패킹 리스트, 도쿄 날씨 코디, 뉴욕 날씨 코디, 룩룩룩, MatchFit Color">
+  <title>출장·여행 맞춤 날씨 & 의상 플래너 | MatchFit Color - 룩룩룩</title>
+  <meta name="description" content="비즈니스 출장과 힐링 휴가 일정에 맞춰 출발일~도착일 날씨 예보와 짐을 최소화하는 스마트 캡슐 옷장 패킹 플랜을 제공합니다.">
+  <meta name="keywords" content="출장 코디, 여행 코디, 휴가 옷차림, 바캉스룩, 출장 짐싸기, 캡슐 옷장, 캐리어 패킹 리스트, 도쿄 날씨 코디, 제주 여행 코디, 룩룩룩, MatchFit Color">
   <meta name="author" content="룩룩룩">
   <link rel="canonical" href="https://tramper2.github.io/MatchColorOutfit/trip.html">
 
   <!-- Open Graph / SNS Sharing -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MatchFit Color">
-  <meta property="og:title" content="출장·여행 일주일치 날씨 & 의상 플래너 | MatchFit Color">
-  <meta property="og:description" content="출장지 7일 날씨 예보와 캡슐 옷장 패킹 체크리스트로 가볍고 완벽한 짐 싸기 완성!">
+  <meta property="og:title" content="출장·여행 맞춤 날씨 & 의상 플래너 | MatchFit Color">
+  <meta property="og:description" content="출장 및 휴가 일정별 실시간 날씨 예보와 캡슐 옷장 패킹 체크리스트로 가볍고 완벽한 짐 싸기 완성!">
   <meta property="og:image" content="https://tramper2.github.io/MatchColorOutfit/Images/20260905T095153_2c47ee8c.jpg">
   <meta property="og:url" content="https://tramper2.github.io/MatchColorOutfit/trip.html">
 
@@ -81,7 +81,7 @@
     <div class="hero-banner-inner">
       <div class="hero-text">
         <span class="hero-icon">✈️🧳</span>
-        <span>출장·여행 갈 때 캐리어 짐 싸기 고민 끝! 일주일치 날씨 기반 스마트 캡슐 패킹 플래너</span>
+        <span>출장·여행 갈 때 캐리어 짐 싸기 고민 끝! 일정별 날씨 맞춤 스마트 캡슐 패킹 플래너</span>
       </div>
       <a href="https://looklooklook.pe.kr/" target="_blank" rel="noopener noreferrer" class="hero-link">
         룩룩룩 트래블웨어 보러가기 &rarr;
@@ -94,18 +94,75 @@
 
     <!-- Page Hero Card -->
     <section class="page-hero-card">
-      <span class="page-hero-badge">✈️ 7-DAY TRIP & BUSINESS PLANNER</span>
-      <h1 class="page-hero-title">출장·여행 일주일치 날씨 & 의상 플래너</h1>
+      <span class="page-hero-badge">✈️ SMART TRIP & VACATION PLANNER</span>
+      <h1 class="page-hero-title">출장·여행 맞춤 날씨 & 의상 플래너</h1>
       <p class="page-hero-desc">
-        출장이나 여행 갈 나라/지역의 7일간 최고·최저 기온과 비 소식을 미리 확인하고, 옷 몇 벌만으로 7일을 스타일리시하게 해결하는 <strong>캡슐 옷장 패킹 체크리스트</strong>를 제공합니다.
+        비즈니스 출장과 힐링 휴가 일정에 맞춰 출발일과 도착일을 설정하세요. 기간별 최고·최저 기온과 비 소식을 확인하고, 짐을 획기적으로 줄여주는 <strong>스마트 캡슐 옷장 패킹 체크리스트</strong>를 제공합니다.
       </p>
     </section>
 
-    <!-- Trip Destination Selector Card -->
+    <!-- Trip Settings & Destination Selector Card -->
     <section class="glass-card weather-control-card">
+      <!-- 1. 여행 목적 선택 (출장 vs 휴가) -->
+      <div class="city-selection-label" style="margin-bottom: 0.65rem;">
+        <span>🎯 여행 목적 선택</span>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">목적에 맞는 스타일 & 패킹 가이드가 적용됩니다</span>
+      </div>
+      <div class="trip-purpose-group" id="tripPurposeGroup">
+        <button type="button" class="btn-purpose-pill active" data-purpose="business">
+          <span>💼</span>
+          <span>비즈니스 출장</span>
+        </button>
+        <button type="button" class="btn-purpose-pill" data-purpose="vacation">
+          <span>🌴</span>
+          <span>힐링 & 휴가 여행</span>
+        </button>
+      </div>
+
+      <!-- 2. 여행 일정 기간 선택 (출발일 ~ 도착일) -->
+      <div class="city-selection-label" style="margin-bottom: 0.65rem;">
+        <span>📅 여행 일정 기간 (언제부터 언제까지)</span>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">원하는 일정을 직접 선택하세요</span>
+      </div>
+      <div class="trip-date-container">
+        <div class="trip-date-inputs-row">
+          <div class="trip-date-field">
+            <label for="tripStartDate" class="trip-date-label">
+              <span>🛫 출발일</span>
+            </label>
+            <input type="date" id="tripStartDate" class="trip-date-input" aria-label="여행 출발일">
+          </div>
+          <span class="trip-date-arrow">~</span>
+          <div class="trip-date-field">
+            <label for="tripEndDate" class="trip-date-label">
+              <span>🛬 도착일</span>
+            </label>
+            <input type="date" id="tripEndDate" class="trip-date-input" aria-label="여행 도착일">
+          </div>
+        </div>
+
+        <!-- 간편 기간 프리셋 -->
+        <div class="duration-preset-row">
+          <span class="preset-row-label">간편 설정:</span>
+          <button type="button" class="btn-preset-chip" data-days="1">당일치기</button>
+          <button type="button" class="btn-preset-chip" data-days="2">1박 2일</button>
+          <button type="button" class="btn-preset-chip" data-days="3">2박 3일</button>
+          <button type="button" class="btn-preset-chip active" data-days="4">3박 4일</button>
+          <button type="button" class="btn-preset-chip" data-days="5">4박 5일</button>
+          <button type="button" class="btn-preset-chip" data-days="7">6박 7일</button>
+        </div>
+
+        <!-- 총 일정 요약 배지 -->
+        <div id="tripDurationBadge" class="trip-summary-badge">
+          <span>✨</span>
+          <span id="tripDurationSummaryText">3박 4일 일정 (총 4일)</span>
+        </div>
+      </div>
+
+      <!-- 3. 도시 선택 -->
       <div class="city-selection-label">
         <span>🌍 출장 / 여행 도시 선택</span>
-        <span style="font-size: 0.8rem; color: var(--text-muted);">국내 및 전세계 주요 출장지</span>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">국내 및 전세계 주요 출장·휴양지</span>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 0.75rem;">
@@ -123,41 +180,41 @@
       </div>
     </section>
 
-    <!-- 7-Day Weather Forecast Timeline Card -->
+    <!-- Weather Forecast Timeline Card -->
     <section class="glass-card" style="padding: 1.75rem; margin-bottom: 1.75rem;">
       <div class="section-header-box" style="margin-bottom: 0.5rem;">
         <div class="section-title-wrap">
           <h2 class="section-title" style="font-size: 1.3rem;">
             <span>📅</span>
             <span id="forecastHeaderCity">도쿄</span>
-            <span>향후 7일간 날씨 & 기온 예보</span>
+            <span id="forecastHeaderDates">일정 날씨 & 기온 예보</span>
           </h2>
-          <p class="section-subtitle">
-            출장 기간 동안의 기온 변화와 비 올 확률을 한눈에 확인하세요. (일교차 대비 필수)
+          <p class="section-subtitle" id="forecastHeaderSubtitle">
+            선택하신 여행 기간 동안의 기온 변화와 비 올 확률을 한눈에 확인하세요. (일교차 대비 필수)
           </p>
         </div>
       </div>
 
-      <!-- 7 Cards Grid -->
+      <!-- Forecast Cards Grid -->
       <div id="tripForecastCardsWrap" class="trip-forecast-cards-wrap">
         <!-- Dynamically populated from Open-Meteo Daily Forecast API -->
       </div>
     </section>
 
-    <!-- 7-Day Outfit Schedule (Day 1 ~ Day 7) -->
+    <!-- Outfit Schedule Grid (Day 1 ~ Day N) -->
     <section class="glass-card" style="padding: 1.75rem; margin-bottom: 2rem;">
       <div class="section-title-wrap" style="margin-bottom: 1.25rem;">
         <h2 class="section-title" style="font-size: 1.3rem;">
-          <span>👔</span>
-          <span>7일간 데일리 코디 스케줄 추천</span>
+          <span id="scheduleHeaderIcon">👔</span>
+          <span id="scheduleHeaderTitle">맞춤 데일리 코디 스케줄 추천</span>
         </h2>
-        <p class="section-subtitle">
+        <p class="section-subtitle" id="scheduleHeaderSubtitle">
           소수의 캡슐 아이템을 돌려 입어 짐을 가볍게 하면서도 매일 다른 세련된 인상을 남기는 믹스앤매치 플랜입니다.
         </p>
       </div>
 
       <div id="tripScheduleGrid" class="daily-outfit-grid">
-        <!-- Dynamically populated Day 1 ~ Day 7 cards -->
+        <!-- Dynamically populated Day 1 ~ Day N cards -->
       </div>
     </section>
 
@@ -167,10 +224,10 @@
         <div class="section-title-wrap">
           <h2 class="section-title" style="font-size: 1.3rem;">
             <span>🧳</span>
-            <span>스마트 캡슐 옷장 패킹 체크리스트</span>
+            <span id="checklistHeaderTitle">스마트 캡슐 옷장 패킹 체크리스트</span>
           </h2>
-          <p class="section-subtitle">
-            <strong>3-3-2 공식:</strong> 상의 3~4벌 + 하의 2벌 + 아우터 1~2벌로 캐리어 무게는 절반, 코디는 2배! (체크 시 자동 저장)
+          <p class="section-subtitle" id="checklistHeaderSubtitle">
+            <strong>스마트 캡슐 공식:</strong> 상의 3~4벌 + 하의 2벌 + 아우터 1~2벌로 캐리어 무게는 절반, 코디는 2배! (체크 시 자동 저장)
           </p>
         </div>
         <div style="font-size: 0.85rem; font-weight: 700; color: #34d399;" id="packingPercentLabel">
@@ -244,9 +301,9 @@
       <span class="dock-icon">🌤️</span>
       <span class="dock-label">날씨코디</span>
     </a>
-    <a href="./trip.html" class="dock-btn active" title="출장·여행 7일 플래너">
+    <a href="./trip.html" class="dock-btn active" title="출장·여행 맞춤 플래너">
       <span class="dock-icon">✈️</span>
-      <span class="dock-label">출장패킹</span>
+      <span class="dock-label">출장·여행</span>
     </a>
     <a href="./trend.html" class="dock-btn" title="올가을 시즌 트렌드">
       <span class="dock-icon">🍂</span>

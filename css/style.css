@@ -2429,20 +2429,158 @@ body {
 }
 
 /* ==========================================================================
-   ✈️ 출장·여행 7일 날씨 & 패킹 플래너 (Trip Page)
+   ✈️ 출장·여행 날씨 & 패킹 플래너 (Trip Page)
    ========================================================================== */
-.trip-forecast-cards-wrap {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+.trip-purpose-group {
+  display: flex;
   gap: 0.65rem;
-  margin: 1.5rem 0;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.btn-purpose-pill {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btn-purpose-pill:hover {
+  background: var(--bg-card-hover);
+  color: #fff;
+  border-color: var(--border-glass-strong);
+}
+.btn-purpose-pill.active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(129, 140, 248, 0.22));
+  border-color: #38bdf8;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
 }
 
-@media (max-width: 900px) {
+/* 여행 일정 선택 영역 */
+.trip-date-container {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.trip-date-inputs-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.trip-date-field {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.trip-date-label {
+  font-size: 0.775rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.trip-date-input {
+  background: rgba(10, 13, 20, 0.8);
+  border: 1px solid var(--border-glass-strong);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: all var(--transition-fast);
+  color-scheme: dark;
+}
+.trip-date-input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+}
+.trip-date-arrow {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  padding-top: 1.2rem;
+}
+.duration-preset-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.preset-row-label {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-right: 0.25rem;
+}
+.btn-preset-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btn-preset-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.btn-preset-chip.active {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  font-weight: 700;
+}
+.trip-summary-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 0.95rem;
+  font-size: 0.85rem;
+  color: #38bdf8;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.trip-forecast-cards-wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 0.65rem;
+  margin: 1.5rem 0;
+}
+@media (max-width: 768px) {
   .trip-forecast-cards-wrap {
-    grid-template-columns: repeat(7, minmax(110px, 1fr));
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.65rem;
+    scroll-snap-type: x mandatory;
+  }
+  .day-forecast-card {
+    min-width: 110px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
   }
 }
 

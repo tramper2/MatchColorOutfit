@@ -936,6 +936,7 @@ export const TRIP_CITIES = [
   { id: "busan", name: "부산", country: "한국", flag: "🇰🇷", lat: 35.1796, lon: 129.0756, type: "domestic" },
   { id: "jeju", name: "제주", country: "한국", flag: "🇰🇷", lat: 33.4996, lon: 126.5312, type: "domestic" },
   { id: "gangneung", name: "강릉/속초", country: "한국", flag: "🇰🇷", lat: 37.7519, lon: 128.8761, type: "domestic" },
+  { id: "yeosu", name: "여수", country: "한국", flag: "🇰🇷", lat: 34.7604, lon: 127.6622, type: "domestic" },
   
   // 아시아 주요 출장 & 여행지
   { id: "tokyo", name: "도쿄", country: "일본", flag: "🇯🇵", lat: 35.6762, lon: 139.6503, type: "asia" },
@@ -946,12 +947,15 @@ export const TRIP_CITIES = [
   { id: "singapore", name: "싱가포르", country: "싱가포르", flag: "🇸🇬", lat: 1.3521, lon: 103.8198, type: "asia" },
   { id: "bangkok", name: "방콕", country: "태국", flag: "🇹🇭", lat: 13.7563, lon: 100.5018, type: "asia" },
   { id: "danang", name: "다낭", country: "베트남", flag: "🇻🇳", lat: 16.0544, lon: 108.2022, type: "asia" },
+  { id: "bali", name: "발리", country: "인도네시아", flag: "🇮🇩", lat: -8.4095, lon: 115.1889, type: "asia" },
   
   // 미주 / 유럽 / 대양주
+  { id: "guam", name: "괌", country: "미국", flag: "🇬🇺", lat: 13.4443, lon: 144.7937, type: "global" },
   { id: "newyork", name: "뉴욕", country: "미국", flag: "🇺🇸", lat: 40.7128, lon: -74.0060, type: "global" },
   { id: "losangeles", name: "로스앤젤레스", country: "미국", flag: "🇺🇸", lat: 34.0522, lon: -118.2437, type: "global" },
   { id: "london", name: "런던", country: "영국", flag: "🇬🇧", lat: 51.5074, lon: -0.1278, type: "global" },
   { id: "paris", name: "파리", country: "프랑스", flag: "🇫🇷", lat: 48.8566, lon: 2.3522, type: "global" },
+  { id: "barcelona", name: "바르셀로나", country: "스페인", flag: "🇪🇸", lat: 41.3879, lon: 2.1699, type: "global" },
   { id: "frankfurt", name: "프랑크푸르트", country: "독일", flag: "🇩🇪", lat: 50.1109, lon: 8.6821, type: "global" },
   { id: "sydney", name: "시드니", country: "호주", flag: "🇦🇺", lat: -33.8688, lon: 151.2093, type: "global" }
 ];
@@ -1118,23 +1122,217 @@ export const WEEKDAY_THEMES = [
 ];
 
 // =========================================================================
-// 🧳 7일 출장·여행 캡슐 옷장 패킹 공식 (Capsule Packing Formula)
+// 🧳 비즈니스 출장 및 힐링 휴가 캡슐 옷장 패킹 가이드
 // =========================================================================
-export const CAPSULE_PACKING_GUIDE = {
-  rule: "3-3-2 공식 (상의 3~4벌 + 하의 2~3벌 + 아우터 1~2벌로 7일 완성)",
-  description: "모든 상의와 하의가 서로 교차 코디될 수 있는 '뉴트럴 컬러(네이비, 그레이, 베이지, 크림, 블랙)'를 베이스로 패킹하면 캐리어 무게는 절반, 코디는 2배가 됩니다.",
-  checklistItems: [
-    { id: "top_neutral", category: "tops", name: "베이직 뉴트럴 상의 2벌 (화이트/크림/그레이)", count: "2벌", essential: true },
-    { id: "top_color", category: "tops", name: "포인트 상의 1~2벌 (네이비/카멜/소프트블루)", count: "1~2벌", essential: true },
-    { id: "bottom_dress", category: "bottoms", name: "단정한 슬랙스/치노팬츠 (네이비 또는 차콜)", count: "1벌", essential: true },
-    { id: "bottom_casual", category: "bottoms", name: "편안한 데님 또는 면바지 (중청/베이지)", count: "1벌", essential: true },
-    { id: "outer_base", category: "outers", name: "만능 아우터 1벌 (테일러드 자켓 또는 가디건)", count: "1벌", essential: true },
-    { id: "outer_extra", category: "outers", name: "보온/우천 대비 서브 아우터 (트렌치코트 or 바람막이)", count: "1벌", essential: false },
-    { id: "shoes_comfy", category: "shoes", name: "많이 걸어도 편한 단정한 스니커즈 (화이트/블랙)", count: "1켤레", essential: true },
-    { id: "shoes_formal", category: "shoes", name: "격식용 로퍼 또는 더비 슈즈", count: "1켤레", essential: false },
-    { id: "acc_belt", category: "accessories", name: "뉴트럴 가죽 벨트 & 시계", count: "1세트", essential: true },
-    { id: "acc_umbrella", category: "accessories", name: "휴대용 초경량 3단 우산 (비 올 확률 대비)", count: "1개", essential: true }
-  ]
+
+// 1. 비즈니스 출장용 패킹 가이드
+export const BUSINESS_PACKING_GUIDE = {
+  type: "business",
+  title: "비즈니스 출장 스마트 캡슐 패킹 공식",
+  rule: "3-2-1 스마트 비즈니스 캡슐 (기본 뉴트럴 중심)",
+  description: "미팅, 오피스 워크, 공식 디너까지 구김 없는 뉴트럴 톤(네이비, 차콜, 크림, 베이지) 위주로 구성하여 짐 무게는 최소화하고 프로페셔널한 신뢰감을 극대화합니다.",
+  getChecklistItems: (days = 4) => {
+    const topCount = Math.min(Math.max(2, Math.ceil(days * 0.6)), 5);
+    const bottomCount = Math.min(Math.max(1, Math.ceil(days * 0.4)), 3);
+    const outerCount = days >= 4 ? 2 : 1;
+    return [
+      { id: "biz_top_dress", category: "tops", name: `링클프리 드레스 셔츠/블라우스 (${Math.ceil(topCount * 0.6)}벌)`, count: `${Math.ceil(topCount * 0.6)}벌`, essential: true },
+      { id: "biz_top_knit", category: "tops", name: `단정한 이너 니트/카라티 (${Math.floor(topCount * 0.4)}벌)`, count: `${Math.floor(topCount * 0.4)}벌`, essential: true },
+      { id: "biz_bottom_slacks", category: "bottoms", name: `구김 없는 슬랙스/치노팬츠 (${bottomCount}벌)`, count: `${bottomCount}벌`, essential: true },
+      { id: "biz_outer_blazer", category: "outers", name: `테일러드 블레이저 자켓 (${outerCount}벌)`, count: `${outerCount}벌`, essential: true },
+      { id: "biz_shoes_formal", category: "shoes", name: "단정한 비즈니스 로퍼 또는 더비 슈즈", count: "1켤레", essential: true },
+      { id: "biz_shoes_comfy", category: "shoes", name: "이동용 편안한 미니멀 스니커즈", count: "1켤레", essential: false },
+      { id: "biz_acc_belt", category: "accessories", name: "단정한 가죽 벨트 & 비즈니스 시계", count: "1세트", essential: true },
+      { id: "biz_acc_umbrella", category: "accessories", name: "휴대용 초경량 3단 우산", count: "1개", essential: true },
+      { id: "biz_acc_laptop", category: "accessories", name: "노트북/태블릿 및 충전 어댑터", count: "1세트", essential: true },
+      { id: "biz_acc_card", category: "accessories", name: "명함 케이스 및 휴대용 구김방지 스프레이", count: "1개", essential: false }
+    ];
+  }
 };
+
+// 2. 힐링 & 휴가 여행용 패킹 가이드
+export const VACATION_PACKING_GUIDE = {
+  type: "vacation",
+  title: "힐링 & 휴가 여행 감성 패킹 공식",
+  rule: "편안함 + 인생샷 컬러 포인트 캡슐",
+  description: "많이 걷고 사진 찍을 일이 많은 휴가! 사진이 화사하게 나오는 포인트 상의와 편안한 데님/이지 팬츠, 자외선 차단 아이템으로 가볍고 설레는 여행 캐리어를 완성합니다.",
+  getChecklistItems: (days = 4) => {
+    const topCount = Math.min(Math.max(2, Math.ceil(days * 0.7)), 6);
+    const bottomCount = Math.min(Math.max(2, Math.ceil(days * 0.45)), 3);
+    const outerCount = days >= 3 ? 2 : 1;
+    return [
+      { id: "vac_top_photo", category: "tops", name: `인생샷 포인트 상의 (버터/카멜/올리브 등 ${Math.ceil(topCount * 0.5)}벌)`, count: `${Math.ceil(topCount * 0.5)}벌`, essential: true },
+      { id: "vac_top_basic", category: "tops", name: `베이직 편안한 티셔츠/민소매 (${Math.floor(topCount * 0.5)}벌)`, count: `${Math.floor(topCount * 0.5)}벌`, essential: true },
+      { id: "vac_bottom_denim", category: "bottoms", name: `활동성 좋은 데님 팬츠/조거/쇼츠 (${bottomCount}벌)`, count: `${bottomCount}벌`, essential: true },
+      { id: "vac_outer_light", category: "outers", name: `일교차/냉방 대비 가벼운 바람막이 또는 가디건 (${outerCount}벌)`, count: `${outerCount}벌`, essential: true },
+      { id: "vac_shoes_walking", category: "shoes", name: "발이 편한 데일리 쿠셔닝 스니커즈", count: "1켤레", essential: true },
+      { id: "vac_shoes_sandals", category: "shoes", name: "휴양지용 샌들 또는 슬립온", count: "1켤레", essential: false },
+      { id: "vac_acc_sun", category: "accessories", name: "자외선 차단 선글라스 & 감성 볼캡/버킷햇", count: "1세트", essential: true },
+      { id: "vac_acc_battery", category: "accessories", name: "대용량 휴대용 보조배터리 & 카메라", count: "1개", essential: true },
+      { id: "vac_acc_crossbag", category: "accessories", name: "가벼운 미니 크로스백/에코백", count: "1개", essential: true },
+      { id: "vac_acc_umbrella", category: "accessories", name: "휴대용 초경량 양우산 (우천 & 햇빛 대비)", count: "1개", essential: true }
+    ];
+  }
+};
+
+// 하위 호환용 기본 가이드
+export const CAPSULE_PACKING_GUIDE = {
+  rule: "스마트 캡슐 패킹 공식",
+  description: "여행 일수와 목적(출장 vs 휴가)에 맞춰 짐은 가볍게, 스타일은 다채롭게 연출합니다.",
+  checklistItems: BUSINESS_PACKING_GUIDE.getChecklistItems(4)
+};
+
+// =========================================================================
+// 👔 비즈니스 출장용 코디 스케줄 풀 (Pool)
+// =========================================================================
+export const BUSINESS_SCHEDULE_POOL = [
+  {
+    themeType: "depart",
+    title: "출발 및 현지 도착 (편안한 스마트 캐주얼)",
+    topId: "melange_gray",
+    topName: "멜란지 그레이",
+    bottomId: "black",
+    bottomName: "블랙 슬랙스",
+    role: "비행기/기차 장시간 이동에도 구김 없고 편안한 이동 룩",
+    tip: "가벼운 멜란지 니트에 신축성 있는 블랙 링클프리 슬랙스 매칭"
+  },
+  {
+    themeType: "meeting",
+    title: "핵심 비즈니스 미팅 & 프레젠테이션",
+    topId: "navy",
+    topName: "네이비 블레이저",
+    bottomId: "beige",
+    bottomName: "베이지 치노/슬랙스",
+    role: "신뢰감과 전문성을 주는 불패의 비즈니스 포멀",
+    tip: "단정한 네이비 자켓에 밝은 베이지 팬츠로 스마트하고 깔끔한 인상"
+  },
+  {
+    themeType: "office",
+    title: "현지 파트너사 오피스 워크 & 협업",
+    topId: "cream",
+    topName: "크림 아이보리 셔츠",
+    bottomId: "charcoal",
+    bottomName: "차콜 그레이 슬랙스",
+    role: "도회적이고 지적인 모던 오피스 룩",
+    tip: "얼굴을 화사하게 밝혀주는 크림 셔츠와 무게감을 주는 차콜 하의"
+  },
+  {
+    themeType: "dinner",
+    title: "공식 네트워킹 만찬 & 디너",
+    topId: "camel",
+    topName: "카멜 니트/자켓",
+    bottomId: "dark_brown",
+    bottomName: "다크 브라운 팬츠",
+    role: "럭셔리하고 품격 있는 웜톤 앙상블",
+    tip: "고급스러운 카멜 톤과 다크 브라운으로 격조 높은 저녁 모임 참석"
+  },
+  {
+    themeType: "casual",
+    title: "현장 시찰 & 자유 시장조사",
+    topId: "olive_khaki",
+    topName: "올리브 카키",
+    bottomId: "mid_denim",
+    bottomName: "중청 데님",
+    role: "감성적이면서 활동성 높은 어반 캐주얼",
+    tip: "많이 걸어도 편안한 데님 팬츠와 내추럴한 카키 아우터"
+  },
+  {
+    themeType: "wrapup",
+    title: "프로젝트 랩업 미팅 & 선물 쇼핑",
+    topId: "navy",
+    topName: "네이비 탑",
+    bottomId: "melange_gray",
+    bottomName: "세련된 그레이 슬랙스",
+    role: "1일차 하의와 2일차 상의를 믹스앤매치한 스마트 룩",
+    tip: "캡슐 옷장의 묘미! 앞선 아이템을 교차 조합해 짐 부담을 줄입니다."
+  },
+  {
+    themeType: "return",
+    title: "체크아웃 & 귀국 비행 (릴랙스 이지웨어)",
+    topId: "butter_yellow",
+    topName: "소프트 버터",
+    bottomId: "black",
+    bottomName: "블랙 팬츠",
+    role: "화사하면서도 오염 걱정 없는 귀국 룩",
+    tip: "얼굴에 생기를 주는 화사한 탑과 편안한 블랙 하의로 산뜻하게 귀국"
+  }
+];
+
+// =========================================================================
+// 🌴 힐링 & 휴가 여행용 코디 스케줄 풀 (Pool)
+// =========================================================================
+export const VACATION_SCHEDULE_POOL = [
+  {
+    themeType: "depart",
+    title: "설레는 출발 & 공항 룩 (감성 원마일웨어)",
+    topId: "melange_gray",
+    topName: "멜란지 그레이 맨투맨/니트",
+    bottomId: "charcoal",
+    bottomName: "차콜 이지 슬랙스/조거",
+    role: "장시간 비행/기차 탑승에도 핏이 무너지지 않는 컴포트 룩",
+    tip: "편안하면서도 힙한 모노톤 셋업 무드로 세련된 공항 패션 연출"
+  },
+  {
+    themeType: "hotplace",
+    title: "핫플레이스 투어 & 인생샷 명소 (화사한 바캉스)",
+    topId: "butter_yellow",
+    topName: "버터 옐로우 니트/셔츠",
+    bottomId: "light_denim",
+    bottomName: "연청 데님 팬츠",
+    role: "자연광 아래서 피부 톤을 밝혀주는 사진 최고 명품 배색",
+    tip: "파란 하늘과 바다, 도심 랜드마크 어디서 찍어도 화보 같은 화사함"
+  },
+  {
+    themeType: "cafe",
+    title: "감성 카페 & 로컬 마켓 산책 (얼씨 내추럴)",
+    topId: "olive_khaki",
+    topName: "올리브 카키 셔츠",
+    bottomId: "beige",
+    bottomName: "베이지 치노/하프팬츠",
+    role: "자연스럽고 편안한 아메카지 & 여행자 무드",
+    tip: "내추럴한 카키와 베이지의 조화로 여유로운 골목길 탐방에 제격"
+  },
+  {
+    themeType: "activity",
+    title: "자연 힐링 & 야외 액티비티 (스포티 캐주얼)",
+    topId: "cream",
+    topName: "크림 화이트 반팔/후디",
+    bottomId: "mid_denim",
+    bottomName: "중청 데님",
+    role: "산책, 테마파크, 야외 투어에 최적화된 청량한 데일리",
+    tip: "청량한 데님에 산뜻한 화이트 크림 탑을 매치하고 편한 워킹화 착용"
+  },
+  {
+    themeType: "dinner",
+    title: "로맨틱 야경 & 분위기 있는 맛집 디너",
+    topId: "camel",
+    topName: "카멜 실크/소프트 니트",
+    bottomId: "dark_brown",
+    bottomName: "다크 브라운 팬츠/스커트",
+    role: "은은한 조명 아래서 가장 매력적인 톤온톤 무드",
+    tip: "깊이감 있는 브라운 계열 조합으로 고급스러운 루프탑 바 & 레스토랑 완벽 대응"
+  },
+  {
+    themeType: "shopping",
+    title: "도심 쇼핑 & 전시/문화 탐방 (어반 시크)",
+    topId: "black",
+    topName: "미니멀 블랙 탑",
+    bottomId: "cream",
+    bottomName: "크림 와이드 슬랙스",
+    role: "모던하고 감각적인 시티 투어룩",
+    tip: "블랙 & 크림의 세련된 대비로 도심 속 백화점과 갤러리 어디서나 시선 집중"
+  },
+  {
+    themeType: "return",
+    title: "아쉬운 마지막 날 & 편안한 귀국",
+    topId: "navy",
+    topName: "소프트 네이비 가디건",
+    bottomId: "melange_gray",
+    bottomName: "그레이 팬츠",
+    role: "1일차의 그레이 하의와 매칭한 스마트 캡슐 귀국 룩",
+    tip: "가볍게 짐을 싸고 편안하게 귀가할 수 있는 릴랙스 핏"
+  }
+];
+
 
 
