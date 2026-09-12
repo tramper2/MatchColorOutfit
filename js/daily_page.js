@@ -48,8 +48,66 @@ function renderOutfits() {
   }
 
   container.innerHTML = filtered.map(item => {
+    const hasLayered = Boolean(item.outerId && item.innerId);
+    const outerObj = item.outerId ? (COLOR_MAP.get(item.outerId) || { hex: '#1B2A4A', name: item.outerName }) : null;
+    const innerObj = item.innerId ? (COLOR_MAP.get(item.innerId) || { hex: '#FFFFFF', name: item.innerName }) : null;
     const topObj = COLOR_MAP.get(item.topId) || { hex: '#9E9E9E', name: item.topName };
     const bottomObj = COLOR_MAP.get(item.bottomId) || { hex: '#383B3E', name: item.bottomName };
+
+    // 3벌(외투+이너+하의) 또는 2벌 스와치 구성
+    const swatchHtml = hasLayered ? `
+      <div class="daily-color-pairing-preview layered-3swatches">
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${outerObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">외투</span>
+            <span class="swatch-title">${item.outerName}</span>
+          </div>
+        </div>
+        <span class="swatch-plus">+</span>
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${innerObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">이너</span>
+            <span class="swatch-title">${item.innerName}</span>
+          </div>
+        </div>
+        <span class="swatch-plus">+</span>
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${bottomObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">하의</span>
+            <span class="swatch-title">${item.bottomName}</span>
+          </div>
+        </div>
+      </div>
+    ` : `
+      <div class="daily-color-pairing-preview">
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${topObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">상의</span>
+            <span class="swatch-title">${item.topName}</span>
+          </div>
+        </div>
+        <span class="swatch-plus">+</span>
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${bottomObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">하의</span>
+            <span class="swatch-title">${item.bottomName}</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const fitUrl = hasLayered
+      ? `./?topMode=layered&outer=${item.outerId}&inner=${item.innerId}&bottom=${item.bottomId}`
+      : `./?topMode=single&top=${item.topId}&bottom=${item.bottomId}`;
+
+    const fitLabel = hasLayered
+      ? '외투+이너+하의 마네킹에 피팅하기 &rarr;'
+      : '이 코디 마네킹에 입혀보기 &rarr;';
 
     return `
       <article class="daily-outfit-card">
@@ -61,24 +119,8 @@ function renderOutfits() {
           <h3 class="daily-card-title">${item.title}</h3>
           <p class="daily-card-subtitle">${item.subtitle}</p>
 
-          <!-- Color Pairing Swatch -->
-          <div class="daily-color-pairing-preview">
-            <div class="color-swatch-box">
-              <span class="swatch-circle" style="background-color: ${topObj.hex};"></span>
-              <div class="swatch-meta">
-                <span class="swatch-part">상의</span>
-                <span class="swatch-title">${item.topName}</span>
-              </div>
-            </div>
-            <span class="swatch-plus">+</span>
-            <div class="color-swatch-box">
-              <span class="swatch-circle" style="background-color: ${bottomObj.hex};"></span>
-              <div class="swatch-meta">
-                <span class="swatch-part">하의</span>
-                <span class="swatch-title">${item.bottomName}</span>
-              </div>
-            </div>
-          </div>
+          <!-- Color Pairing Swatch (3-piece or 2-piece) -->
+          ${swatchHtml}
 
           <div style="margin: 0.85rem 0; padding: 0.65rem 0.85rem; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); border-left: 3px solid #38bdf8;">
             <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">핵심 아이템</div>
@@ -91,9 +133,9 @@ function renderOutfits() {
           </ul>
         </div>
 
-        <a href="./?top=${item.topId}&bottom=${item.bottomId}" class="btn-fit-in-mannequin" title="이 코디를 메인 마네킹에 피팅해보기">
-          <span>👕👖</span>
-          <span>이 코디 마네킹에 입혀보기 &rarr;</span>
+        <a href="${fitUrl}" class="btn-fit-in-mannequin" title="이 코디를 메인 마네킹에 피팅해보기">
+          <span>🧥👕👖</span>
+          <span>${fitLabel}</span>
         </a>
       </article>
     `;

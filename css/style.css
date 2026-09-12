@@ -3083,3 +3083,57 @@ body {
   font-weight: bold;
 }
 
+/* 3벌 레이어드(외투+이너+하의) 컬러 스와치 페어링 스타일 */
+.daily-color-pairing-preview.layered-3swatches {
+  gap: 0.45rem;
+  padding: 0.65rem 0.75rem;
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
+.daily-color-pairing-preview.layered-3swatches .color-swatch-box {
+  min-width: 0;
+  gap: 0.35rem;
+}
+
+.daily-color-pairing-preview.layered-3swatches .swatch-circle {
+  width: 20px;
+  height: 20px;
+}
+
+.daily-color-pairing-preview.layered-3swatches .swatch-part {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.daily-color-pairing-preview.layered-3swatches .swatch-title {
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.daily-color-pairing-preview.layered-3swatches .swatch-plus {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .daily-color-pairing-preview.layered-3swatches {
+    gap: 0.3rem;
+    padding: 0.55rem 0.6rem;
+  }
+  .daily-color-pairing-preview.layered-3swatches .swatch-circle {
+    width: 17px;
+    height: 17px;
+  }
+  .daily-color-pairing-preview.layered-3swatches .swatch-part {
+    font-size: 0.6rem;
+  }
+  .daily-color-pairing-preview.layered-3swatches .swatch-title {
+    font-size: 0.72rem;
+  }
+}
+
+

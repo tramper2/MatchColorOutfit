@@ -121,26 +121,68 @@ function updateWeatherUI() {
   if (DOM.fitOuter) DOM.fitOuter.textContent = matchedGuide.outer;
   if (DOM.fitShoes) DOM.fitShoes.textContent = matchedGuide.shoes.join(', ');
 
-  // 추천 컬러 칩
-  if (DOM.weatherColorPillsContainer && matchedGuide.recommendedColors) {
-    DOM.weatherColorPillsContainer.innerHTML = matchedGuide.recommendedColors.map(c => `
-      <span class="weather-color-pill" title="${c.name} (${c.hex}) - ${c.role}">
-        <span class="color-circle-mini" style="background-color: ${c.hex};"></span>
-        <strong style="color: #fff;">${c.name}</strong>
-        <span style="font-size: 0.7rem; color: var(--text-muted);">${c.role}</span>
-      </span>
-    `).join('');
+  // 추천 컬러 칩 & 부위별 대표 컬러 렌더링
+  if (DOM.weatherColorPillsContainer) {
+    let pillsHtml = '';
+
+    if (matchedGuide.hasOuter && matchedGuide.outerId && matchedGuide.innerId) {
+      const outerColor = COLOR_MAP.get(matchedGuide.outerId) || { hex: '#1B2A4A', name: matchedGuide.outerName };
+      const innerColor = COLOR_MAP.get(matchedGuide.innerId) || { hex: '#FFFFFF', name: matchedGuide.innerName };
+      const bottomColor = COLOR_MAP.get(matchedGuide.bottomId) || { hex: '#383B3E', name: matchedGuide.bottomName };
+
+      pillsHtml += `
+        <div style="width: 100%; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <span class="weather-color-pill" style="border-color: #38bdf8;" title="추천 외투 컬러">
+            <span class="color-circle-mini" style="background-color: ${outerColor.hex};"></span>
+            <strong style="color: #fff;">${matchedGuide.outerName}</strong>
+            <span style="font-size: 0.7rem; color: #38bdf8; font-weight: 700;">[외투]</span>
+          </span>
+          <span class="weather-color-pill" style="border-color: #a855f7;" title="추천 이너 컬러">
+            <span class="color-circle-mini" style="background-color: ${innerColor.hex};"></span>
+            <strong style="color: #fff;">${matchedGuide.innerName}</strong>
+            <span style="font-size: 0.7rem; color: #c084fc; font-weight: 700;">[이너]</span>
+          </span>
+          <span class="weather-color-pill" style="border-color: #34d399;" title="추천 하의 컬러">
+            <span class="color-circle-mini" style="background-color: ${bottomColor.hex};"></span>
+            <strong style="color: #fff;">${matchedGuide.bottomName}</strong>
+            <span style="font-size: 0.7rem; color: #34d399; font-weight: 700;">[하의]</span>
+          </span>
+        </div>
+      `;
+    }
+
+    if (matchedGuide.recommendedColors) {
+      pillsHtml += matchedGuide.recommendedColors.map(c => `
+        <span class="weather-color-pill" title="${c.name} (${c.hex}) - ${c.role}">
+          <span class="color-circle-mini" style="background-color: ${c.hex};"></span>
+          <strong style="color: #fff;">${c.name}</strong>
+          <span style="font-size: 0.7rem; color: var(--text-muted);">${c.role}</span>
+        </span>
+      `).join('');
+    }
+
+    DOM.weatherColorPillsContainer.innerHTML = pillsHtml;
   }
 
-  // 마네킹 피팅 링크 연결
-  if (DOM.btnFitInStudio && matchedGuide.recommendedColors.length >= 2) {
-    const topId = matchedGuide.recommendedColors[0].id;
-    const bottomId = matchedGuide.recommendedColors[1].id;
-    DOM.btnFitInStudio.href = `./?top=${topId}&bottom=${bottomId}`;
-    DOM.btnFitInStudio.innerHTML = `
-      <span>👕👖</span>
-      <span>${matchedGuide.recommendedColors[0].name} + ${matchedGuide.recommendedColors[1].name} 마네킹에 피팅하기 &rarr;</span>
-    `;
+  // 마네킹 피팅 링크 연결 (외투+이너+하의 3벌 레이어드 연동)
+  if (DOM.btnFitInStudio) {
+    if (matchedGuide.hasOuter && matchedGuide.outerId && matchedGuide.innerId) {
+      DOM.btnFitInStudio.href = `./?topMode=layered&outer=${matchedGuide.outerId}&inner=${matchedGuide.innerId}&bottom=${matchedGuide.bottomId}`;
+      DOM.btnFitInStudio.innerHTML = `
+        <span>🧥👕👖</span>
+        <span>${matchedGuide.outerName} + ${matchedGuide.innerName} + ${matchedGuide.bottomName} 마네킹에 피팅하기 &rarr;</span>
+      `;
+    } else {
+      const topId = matchedGuide.topId || (matchedGuide.recommendedColors ? matchedGuide.recommendedColors[0].id : 'white');
+      const bottomId = matchedGuide.bottomId || (matchedGuide.recommendedColors ? matchedGuide.recommendedColors[1].id : 'beige');
+      const topName = matchedGuide.topName || '상의';
+      const bottomName = matchedGuide.bottomName || '하의';
+      DOM.btnFitInStudio.href = `./?topMode=single&top=${topId}&bottom=${bottomId}`;
+      DOM.btnFitInStudio.innerHTML = `
+        <span>👕👖</span>
+        <span>${topName} + ${bottomName} 마네킹에 피팅하기 &rarr;</span>
+      `;
+    }
   }
 
   // 하단 조견표 현재 구간 하이라이트

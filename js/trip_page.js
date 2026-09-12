@@ -434,6 +434,10 @@ function renderTripSchedule() {
       dayNum,
       dateLabel,
       title: `${dayNum}일차: ${template.title}`,
+      outerId: template.outerId,
+      outerName: template.outerName,
+      innerId: template.innerId,
+      innerName: template.innerName,
       topId: template.topId,
       topName: template.topName,
       bottomId: template.bottomId,
@@ -446,8 +450,65 @@ function renderTripSchedule() {
   }
 
   DOM.tripScheduleGrid.innerHTML = scheduleItems.map(s => {
+    const hasLayered = Boolean(s.outerId && s.innerId);
+    const outerObj = s.outerId ? (COLOR_MAP.get(s.outerId) || { hex: '#1B2A4A' }) : null;
+    const innerObj = s.innerId ? (COLOR_MAP.get(s.innerId) || { hex: '#FFFFFF' }) : null;
     const topObj = COLOR_MAP.get(s.topId) || { hex: '#9E9E9E' };
     const bottomObj = COLOR_MAP.get(s.bottomId) || { hex: '#383B3E' };
+
+    const swatchHtml = hasLayered ? `
+      <div class="daily-color-pairing-preview layered-3swatches">
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${outerObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">외투</span>
+            <span class="swatch-title">${s.outerName}</span>
+          </div>
+        </div>
+        <span class="swatch-plus">+</span>
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${innerObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">이너</span>
+            <span class="swatch-title">${s.innerName}</span>
+          </div>
+        </div>
+        <span class="swatch-plus">+</span>
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${bottomObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">하의</span>
+            <span class="swatch-title">${s.bottomName}</span>
+          </div>
+        </div>
+      </div>
+    ` : `
+      <div class="daily-color-pairing-preview">
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${topObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">상의</span>
+            <span class="swatch-title">${s.topName}</span>
+          </div>
+        </div>
+        <span class="swatch-plus">+</span>
+        <div class="color-swatch-box">
+          <span class="swatch-circle" style="background-color: ${bottomObj.hex};"></span>
+          <div class="swatch-meta">
+            <span class="swatch-part">하의</span>
+            <span class="swatch-title">${s.bottomName}</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const fitUrl = hasLayered
+      ? `./?topMode=layered&outer=${s.outerId}&inner=${s.innerId}&bottom=${s.bottomId}`
+      : `./?topMode=single&top=${s.topId}&bottom=${s.bottomId}`;
+
+    const fitLabel = hasLayered
+      ? `Day ${s.dayNum} 외투+이너+하의 피팅하기 &rarr;`
+      : `Day ${s.dayNum} 코디 마네킹에 피팅하기 &rarr;`;
 
     return `
       <article class="daily-outfit-card">
@@ -459,32 +520,17 @@ function renderTripSchedule() {
           <h3 class="daily-card-title">${s.title}</h3>
           <p class="daily-card-subtitle">${s.role}</p>
 
-          <div class="daily-color-pairing-preview">
-            <div class="color-swatch-box">
-              <span class="swatch-circle" style="background-color: ${topObj.hex};"></span>
-              <div class="swatch-meta">
-                <span class="swatch-part">상의</span>
-                <span class="swatch-title">${s.topName}</span>
-              </div>
-            </div>
-            <span class="swatch-plus">+</span>
-            <div class="color-swatch-box">
-              <span class="swatch-circle" style="background-color: ${bottomObj.hex};"></span>
-              <div class="swatch-meta">
-                <span class="swatch-part">하의</span>
-                <span class="swatch-title">${s.bottomName}</span>
-              </div>
-            </div>
-          </div>
+          <!-- 3-piece or 2-piece Color Pairing Swatch -->
+          ${swatchHtml}
 
           <p style="font-size: 0.825rem; color: var(--text-secondary); line-height: 1.5; margin-top: 0.65rem;">
             💡 <strong>스타일링 & 패킹 팁:</strong> ${s.tip}
           </p>
         </div>
 
-        <a href="./?top=${s.topId}&bottom=${s.bottomId}" class="btn-fit-in-mannequin">
-          <span>👕👖</span>
-          <span>Day ${s.dayNum} 코디 마네킹에 피팅하기 &rarr;</span>
+        <a href="${fitUrl}" class="btn-fit-in-mannequin">
+          <span>🧥👕👖</span>
+          <span>${fitLabel}</span>
         </a>
       </article>
     `;
