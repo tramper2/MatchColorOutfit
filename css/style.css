@@ -582,18 +582,32 @@ body {
 }
 
 .floating-top-badge {
-  top: 6px;
-  right: -4px;
+  top: 8px;
+  right: -6px;
 }
 
 .floating-outer-badge {
-  top: 6px;
+  top: 8px;
   left: -8px;
 }
 
+/* 이너 배지: 외투 배지와 겹치지 않도록 이너와 바지 사이 허리춤(Mid-Torso) 공간에 위치 */
 .floating-inner-badge {
-  top: 6px;
+  top: 44%;
   right: -8px;
+  transform: translateY(-50%);
+}
+
+.floating-inner-badge:hover {
+  transform: translateY(-50%) scale(1.06);
+}
+
+.floating-inner-badge.is-active-target {
+  transform: translateY(-50%);
+}
+
+.floating-inner-badge.is-active-target:hover {
+  transform: translateY(-50%) scale(1.06);
 }
 
 .floating-bottom-badge {
@@ -1776,8 +1790,30 @@ body {
   }
   .floating-color-badge {
     font-size: 0.65rem;
-    padding: 0.25rem 0.5rem;
-    gap: 0.3rem;
+    padding: 0.22rem 0.48rem;
+    gap: 0.25rem;
+    white-space: nowrap;
+  }
+  .floating-top-badge {
+    top: 6px;
+    right: -4px;
+  }
+  .floating-outer-badge {
+    top: 6px;
+    left: -6px;
+  }
+  .floating-inner-badge {
+    top: 44%;
+    right: -6px;
+    transform: translateY(-50%);
+  }
+  .floating-inner-badge:hover,
+  .floating-inner-badge.is-active-target:hover {
+    transform: translateY(-50%) scale(1.04);
+  }
+  .floating-bottom-badge {
+    bottom: 12px;
+    right: -4px;
   }
   .svg-container-box.is-active-target::after {
     content: "🎯";
