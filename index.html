@@ -126,17 +126,28 @@
   <!-- 스크롤 시 화면 상단에 달라붙어 언제든 현재 상/하의 색상을 확인하고 원클릭 스왑/랜덤을 할 수 있는 모바일 전용 플로팅 바 -->
   <nav id="mobileStickyBar" class="mobile-sticky-bar" aria-label="현재 코디 빠른 확인 바">
     <div class="mobile-sticky-inner">
-      <div class="sticky-preview-chips">
-        <div class="sticky-chip">
+      <div id="stickyPreviewChips" class="sticky-preview-chips">
+        <div id="stickyOuterChip" class="sticky-chip">
+          <span class="chip-label">외투</span>
+          <span id="stickyOuterDot" class="chip-color-dot" style="background-color: #C19A6B;"></span>
+          <span id="stickyOuterName" class="chip-name">카멜</span>
+        </div>
+        <span id="stickyOuterDivider" class="chip-divider">+</span>
+        <div id="stickyInnerChip" class="sticky-chip">
+          <span class="chip-label">이너</span>
+          <span id="stickyInnerDot" class="chip-color-dot" style="background-color: #F4F1EA;"></span>
+          <span id="stickyInnerName" class="chip-name">크림</span>
+        </div>
+        <div id="stickyTopChip" class="sticky-chip" style="display: none;">
           <span class="chip-label">상의</span>
           <span id="stickyTopDot" class="chip-color-dot" style="background-color: #1B2A4A;"></span>
           <span id="stickyTopName" class="chip-name">네이비</span>
         </div>
         <span class="chip-divider">+</span>
-        <div class="sticky-chip">
+        <div id="stickyBottomChip" class="sticky-chip">
           <span class="chip-label">하의</span>
-          <span id="stickyBottomDot" class="chip-color-dot" style="background-color: #D7C9AA;"></span>
-          <span id="stickyBottomName" class="chip-name">베이지</span>
+          <span id="stickyBottomDot" class="chip-color-dot" style="background-color: #4A3525;"></span>
+          <span id="stickyBottomName" class="chip-name">다크 브라운</span>
         </div>
       </div>
       <div class="sticky-actions">
@@ -192,41 +203,73 @@
             <!-- Mannequin Stage -->
             <div class="mannequin-stage">
               <div class="garment-wrapper">
-                <!-- Floating Top Badge -->
-                <div id="topColorBadge" class="floating-color-badge floating-top-badge">
+                <!-- Floating Badges for Layered Mode -->
+                <div id="outerColorBadge" class="floating-color-badge floating-outer-badge" title="외투를 클릭하여 외투 색상 선택">
+                  <span class="badge-color-dot" style="background-color: #C19A6B;"></span>
+                  <span>외투: 카멜</span>
+                </div>
+
+                <div id="innerColorBadge" class="floating-color-badge floating-inner-badge" title="이너를 클릭하여 이너 색상 선택">
+                  <span class="badge-color-dot" style="background-color: #F4F1EA;"></span>
+                  <span>이너: 크림 아이보리</span>
+                </div>
+
+                <!-- Floating Top Badge for Single Mode (1벌 모드 전용) -->
+                <div id="topColorBadge" class="floating-color-badge floating-top-badge" style="display: none;" title="상의를 클릭하여 상의 색상 선택">
                   <span class="badge-color-dot" style="background-color: #1B2A4A;"></span>
                   <span>상의: 네이비</span>
                 </div>
 
-                <!-- Top SVG -->
+                <!-- Top SVG Container (단일 상의 또는 외투+이너 레이어드 렌더링) -->
                 <div id="svgTopContainer" class="svg-container-box"></div>
 
-                <!-- Bottom SVG -->
+                <!-- Bottom SVG Container -->
                 <div id="svgBottomContainer" class="svg-container-box"></div>
 
                 <!-- Floating Bottom Badge -->
-                <div id="bottomColorBadge" class="floating-color-badge floating-bottom-badge">
-                  <span class="badge-color-dot" style="background-color: #D7C9AA;"></span>
-                  <span>하의: 베이지</span>
+                <div id="bottomColorBadge" class="floating-color-badge floating-bottom-badge" title="하의를 클릭하여 하의 색상 선택">
+                  <span class="badge-color-dot" style="background-color: #4A3525;"></span>
+                  <span>하의: 다크 브라운</span>
                 </div>
               </div>
 
-              <!-- Bottom Silhouette Toggle -->
-              <div class="bottom-type-selector" role="group" aria-label="하의 형태 선택">
-                <button type="button" id="btnPants" class="type-toggle-btn active" title="바지 실루엣">
-                  <span>👖</span>
-                  <span>바지</span>
-                </button>
-                <button type="button" id="btnSkirt" class="type-toggle-btn" title="치마 실루엣">
-                  <span>👗</span>
-                  <span>치마</span>
-                </button>
+              <!-- Dual Garment Option Controllers (상의 구성 1벌 vs 2벌 & 하의 형태 바지 vs 치마) -->
+              <div class="outfit-option-controllers" role="toolbar" aria-label="의상 구성 및 실루엣 옵션 선택">
+                <!-- 1. 상의 구성 옵션: 1벌 vs 2벌 -->
+                <div class="option-pill-group">
+                  <span class="option-group-label">상의 구성</span>
+                  <div class="type-selector-pill" role="group" aria-label="상의 구성 선택">
+                    <button type="button" id="btnTopSingle" class="type-toggle-btn" title="상의 1벌 단품 (티/셔츠)">
+                      <span>👕</span>
+                      <span>상의 1벌</span>
+                    </button>
+                    <button type="button" id="btnTopLayered" class="type-toggle-btn active" title="상의 2벌 레이어드 (외투 + 이너)">
+                      <span>🧥</span>
+                      <span>외투 + 이너</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 2. 하의 형태 옵션: 바지 vs 치마 -->
+                <div class="option-pill-group">
+                  <span class="option-group-label">하의 형태</span>
+                  <div class="type-selector-pill" role="group" aria-label="하의 형태 선택">
+                    <button type="button" id="btnPants" class="type-toggle-btn active" title="바지 실루엣">
+                      <span>👖</span>
+                      <span>바지</span>
+                    </button>
+                    <button type="button" id="btnSkirt" class="type-toggle-btn" title="치마 실루엣">
+                      <span>👗</span>
+                      <span>치마</span>
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <!-- Click to Select Hint -->
               <div class="mannequin-click-hint" aria-hidden="true">
                 <span>👆</span>
-                <span>상의나 하의를 직접 클릭(터치)하여 기준 옷을 바꿀 수 있습니다</span>
+                <span id="mannequinClickHintText">외투, 이너, 하의를 직접 클릭(터치)하여 기준 옷을 바꿀 수 있습니다</span>
               </div>
             </div>
 
@@ -334,13 +377,20 @@
       <div class="section-header-box">
         <div class="section-title-wrap">
           <h2 id="recSectionTitle" class="section-title">
-            <span>선택한 상의</span>
-            <span class="target-highlight">[네이비]</span>
-            <span>에 어울리는 하의 5가지 색상입니다</span>
+            <span>선택한 외투</span>
+            <span class="target-highlight">[카멜]</span>
+            <span>에 어울리는 추천 3가지 색상입니다</span>
           </h2>
           <p id="recSectionSubtitle" class="section-subtitle">
-            색채학 및 룩룩룩 스타일리스트가 검증한 5가지 추천 매칭 조합입니다.
+            색채학 및 룩룩룩 스타일리스트가 엄선한 베스트 3가지 추천 컬러를 [하의]에 바로 입혀보세요.
           </p>
+          <!-- 추천 피팅 부위 선택기 (2벌 레이어드 모드 시 유용) -->
+          <div id="recTargetSelector" class="rec-target-selector" role="group" aria-label="추천 적용 부위">
+            <span class="rec-target-guide">피팅 대상:</span>
+            <button type="button" class="btn-rec-target active" data-target="bottom">👖 하의</button>
+            <button type="button" class="btn-rec-target" data-target="inner">👕 이너</button>
+            <button type="button" class="btn-rec-target" data-target="outer">🧥 외투</button>
+          </div>
         </div>
         <span class="rec-swipe-hint font-outfit">👈 카드를 옆으로 넘겨보세요</span>
       </div>
@@ -438,6 +488,6 @@
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <!-- Main Application Script -->
-  <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/app.js?v=v4diff"></script>
 </body>
 </html>
