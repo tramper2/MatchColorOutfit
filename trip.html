@@ -213,6 +213,27 @@
         </p>
       </div>
 
+      <!-- Style Mode Switcher for Trip Outfits -->
+      <div class="trip-schedule-mode-bar">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1rem;">🧳</span>
+          <div>
+            <div style="font-size: 0.9rem; font-weight: 700; color: #fff;">일정 코디 구성 모드</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">전체 일정의 스케줄 카드를 3벌 레이어드 또는 가벼운 2벌 모드로 전환합니다</div>
+          </div>
+        </div>
+        <div class="outfit-mode-btn-group" id="tripOutfitModeGroup" role="group" aria-label="출장 여행 코디 모드 선택">
+          <button type="button" class="btn-outfit-mode active" data-mode="layered" id="btnTripModeLayered">
+            <span>🧥</span>
+            <span>외투 3벌 레이어드</span>
+          </button>
+          <button type="button" class="btn-outfit-mode" data-mode="single" id="btnTripModeSingle">
+            <span>👕</span>
+            <span>가벼운 상의 2벌</span>
+          </button>
+        </div>
+      </div>
+
       <div id="tripScheduleGrid" class="daily-outfit-grid">
         <!-- Dynamically populated Day 1 ~ Day N cards -->
       </div>

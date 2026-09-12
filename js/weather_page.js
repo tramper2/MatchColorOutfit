@@ -7,6 +7,8 @@ import { DOMESTIC_CITIES, TEMPERATURE_GUIDES, WMO_WEATHER_CODES, COLOR_MAP } fro
 
 let currentCity = DOMESTIC_CITIES[0]; // 기본: 서울
 let currentWeather = null;
+let weatherOutfitMode = localStorage.getItem('matchfit_outfit_mode') || 'layered';
+let userSelectedMode = false;
 
 const DOM = {
   cityChipsContainer: document.getElementById('cityChipsContainer'),
@@ -111,21 +113,46 @@ function updateWeatherUI() {
   const targetTemp = temp;
   const matchedGuide = TEMPERATURE_GUIDES.find(g => targetTemp >= g.minTemp && targetTemp <= g.maxTemp) || TEMPERATURE_GUIDES[3];
 
+  // 사용자가 명시적으로 토글을 클릭하지 않았다면 날씨/아우터에 따라 지능형 기본값 설정
+  if (!userSelectedMode) {
+    if (targetTemp >= 28 || !matchedGuide.hasOuter) {
+      weatherOutfitMode = 'single';
+    } else {
+      weatherOutfitMode = localStorage.getItem('matchfit_outfit_mode') || 'layered';
+    }
+  }
+
+  // 모드 버튼 활성 상태 동기화
+  const modeButtons = document.querySelectorAll('#weatherOutfitModeGroup .btn-outfit-mode');
+  modeButtons.forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-mode') === weatherOutfitMode);
+  });
+
+  const isLayeredActive = weatherOutfitMode === 'layered' && matchedGuide.hasOuter && Boolean(matchedGuide.outerId && matchedGuide.innerId);
+
   // 오른쪽 코디 추천 박스
   if (DOM.guideTempLabel) DOM.guideTempLabel.textContent = `현재 ${matchedGuide.label} 구간`;
   if (DOM.guideTitle) DOM.guideTitle.textContent = `${matchedGuide.title} 추천 코디`;
   if (DOM.guideSummary) DOM.guideSummary.textContent = `${matchedGuide.summary}. ${matchedGuide.stylingTip}`;
 
-  if (DOM.fitTops) DOM.fitTops.textContent = matchedGuide.tops.slice(0, 2).join(', ');
+  if (DOM.fitTops) {
+    DOM.fitTops.textContent = isLayeredActive 
+      ? `${matchedGuide.tops.slice(0, 2).join(', ')} (이너)`
+      : matchedGuide.tops.slice(0, 2).join(', ');
+  }
   if (DOM.fitBottoms) DOM.fitBottoms.textContent = matchedGuide.bottoms.slice(0, 2).join(', ');
-  if (DOM.fitOuter) DOM.fitOuter.textContent = matchedGuide.outer;
+  if (DOM.fitOuter) {
+    DOM.fitOuter.textContent = isLayeredActive 
+      ? matchedGuide.outer 
+      : (targetTemp >= 28 ? '외투 불필요 (단품 추천)' : `${matchedGuide.outer} (휴대/탈의용)`);
+  }
   if (DOM.fitShoes) DOM.fitShoes.textContent = matchedGuide.shoes.join(', ');
 
   // 추천 컬러 칩 & 부위별 대표 컬러 렌더링
   if (DOM.weatherColorPillsContainer) {
     let pillsHtml = '';
 
-    if (matchedGuide.hasOuter && matchedGuide.outerId && matchedGuide.innerId) {
+    if (isLayeredActive) {
       const outerColor = COLOR_MAP.get(matchedGuide.outerId) || { hex: '#1B2A4A', name: matchedGuide.outerName };
       const innerColor = COLOR_MAP.get(matchedGuide.innerId) || { hex: '#FFFFFF', name: matchedGuide.innerName };
       const bottomColor = COLOR_MAP.get(matchedGuide.bottomId) || { hex: '#383B3E', name: matchedGuide.bottomName };
@@ -149,6 +176,26 @@ function updateWeatherUI() {
           </span>
         </div>
       `;
+    } else {
+      const topId = matchedGuide.topId || (matchedGuide.recommendedColors ? matchedGuide.recommendedColors[0].id : 'white');
+      const bottomId = matchedGuide.bottomId || (matchedGuide.recommendedColors ? matchedGuide.recommendedColors[1].id : 'beige');
+      const topColor = COLOR_MAP.get(topId) || { hex: '#9E9E9E', name: matchedGuide.topName || '상의' };
+      const bottomColor = COLOR_MAP.get(bottomId) || { hex: '#383B3E', name: matchedGuide.bottomName || '하의' };
+
+      pillsHtml += `
+        <div style="width: 100%; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <span class="weather-color-pill" style="border-color: #38bdf8;" title="추천 상의 컬러">
+            <span class="color-circle-mini" style="background-color: ${topColor.hex};"></span>
+            <strong style="color: #fff;">${matchedGuide.topName || topColor.name}</strong>
+            <span style="font-size: 0.7rem; color: #38bdf8; font-weight: 700;">[상의]</span>
+          </span>
+          <span class="weather-color-pill" style="border-color: #34d399;" title="추천 하의 컬러">
+            <span class="color-circle-mini" style="background-color: ${bottomColor.hex};"></span>
+            <strong style="color: #fff;">${matchedGuide.bottomName || bottomColor.name}</strong>
+            <span style="font-size: 0.7rem; color: #34d399; font-weight: 700;">[하의]</span>
+          </span>
+        </div>
+      `;
     }
 
     if (matchedGuide.recommendedColors) {
@@ -164,9 +211,9 @@ function updateWeatherUI() {
     DOM.weatherColorPillsContainer.innerHTML = pillsHtml;
   }
 
-  // 마네킹 피팅 링크 연결 (외투+이너+하의 3벌 레이어드 연동)
+  // 마네킹 피팅 링크 연결 (외투+이너+하의 3벌 또는 상+하의 2벌)
   if (DOM.btnFitInStudio) {
-    if (matchedGuide.hasOuter && matchedGuide.outerId && matchedGuide.innerId) {
+    if (isLayeredActive) {
       DOM.btnFitInStudio.href = `./?topMode=layered&outer=${matchedGuide.outerId}&inner=${matchedGuide.innerId}&bottom=${matchedGuide.bottomId}`;
       DOM.btnFitInStudio.innerHTML = `
         <span>🧥👕👖</span>
@@ -244,9 +291,28 @@ function setupGpsDetection() {
   });
 }
 
+// 6. 의상 모드 토글 (외투 레이어드 vs 상의 1벌 심플)
+function setupWeatherOutfitModeToggle() {
+  const group = document.getElementById('weatherOutfitModeGroup');
+  if (!group) return;
+
+  const buttons = group.querySelectorAll('.btn-outfit-mode');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      userSelectedMode = true;
+      const mode = btn.getAttribute('data-mode');
+      if (weatherOutfitMode === mode) return;
+      weatherOutfitMode = mode;
+      localStorage.setItem('matchfit_outfit_mode', weatherOutfitMode);
+      updateWeatherUI();
+    });
+  });
+}
+
 // Init
 function init() {
   renderCityChips();
+  setupWeatherOutfitModeToggle();
   setupGpsDetection();
   fetchWeather();
 }

@@ -23,6 +23,7 @@ let currentPurpose = 'business'; // 'business' | 'vacation'
 let currentRegion = 'asia';
 let currentCity = TRIP_CITIES.find(c => c.id === 'tokyo') || TRIP_CITIES[0];
 let dailyForecast = null;
+let tripOutfitMode = localStorage.getItem('matchfit_outfit_mode') || 'layered';
 
 // 기본 일정: 오늘부터 3박 4일 (총 4일)
 const now = new Date();
@@ -449,14 +450,19 @@ function renderTripSchedule() {
     });
   }
 
+  const modeButtons = document.querySelectorAll('#tripOutfitModeGroup .btn-outfit-mode');
+  modeButtons.forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-mode') === tripOutfitMode);
+  });
+
   DOM.tripScheduleGrid.innerHTML = scheduleItems.map(s => {
-    const hasLayered = Boolean(s.outerId && s.innerId);
+    const isLayered = tripOutfitMode === 'layered' && Boolean(s.outerId && s.innerId);
     const outerObj = s.outerId ? (COLOR_MAP.get(s.outerId) || { hex: '#1B2A4A' }) : null;
     const innerObj = s.innerId ? (COLOR_MAP.get(s.innerId) || { hex: '#FFFFFF' }) : null;
     const topObj = COLOR_MAP.get(s.topId) || { hex: '#9E9E9E' };
     const bottomObj = COLOR_MAP.get(s.bottomId) || { hex: '#383B3E' };
 
-    const swatchHtml = hasLayered ? `
+    const swatchHtml = isLayered ? `
       <div class="daily-color-pairing-preview layered-3swatches">
         <div class="color-swatch-box">
           <span class="swatch-circle" style="background-color: ${outerObj.hex};"></span>
@@ -502,13 +508,15 @@ function renderTripSchedule() {
       </div>
     `;
 
-    const fitUrl = hasLayered
+    const fitUrl = isLayered
       ? `./?topMode=layered&outer=${s.outerId}&inner=${s.innerId}&bottom=${s.bottomId}`
       : `./?topMode=single&top=${s.topId}&bottom=${s.bottomId}`;
 
-    const fitLabel = hasLayered
+    const fitLabel = isLayered
       ? `Day ${s.dayNum} 외투+이너+하의 피팅하기 &rarr;`
-      : `Day ${s.dayNum} 코디 마네킹에 피팅하기 &rarr;`;
+      : `Day ${s.dayNum} 상의+하의 피팅하기 &rarr;`;
+
+    const fitIcon = isLayered ? '🧥👕👖' : '👕👖';
 
     return `
       <article class="daily-outfit-card">
@@ -529,7 +537,7 @@ function renderTripSchedule() {
         </div>
 
         <a href="${fitUrl}" class="btn-fit-in-mannequin">
-          <span>🧥👕👖</span>
+          <span>${fitIcon}</span>
           <span>${fitLabel}</span>
         </a>
       </article>
@@ -631,11 +639,29 @@ function setupResetChecklist() {
   });
 }
 
+// 10-1. 출장·여행 의상 모드 토글 (외투 3벌 vs 가벼운 2벌)
+function setupTripOutfitModeToggle() {
+  const group = document.getElementById('tripOutfitModeGroup');
+  if (!group) return;
+
+  const buttons = group.querySelectorAll('.btn-outfit-mode');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.getAttribute('data-mode');
+      if (tripOutfitMode === mode) return;
+      tripOutfitMode = mode;
+      localStorage.setItem('matchfit_outfit_mode', tripOutfitMode);
+      renderTripSchedule();
+    });
+  });
+}
+
 // =========================================================================
 // 11. 초기화 (Init)
 // =========================================================================
 function init() {
   setupPurposeToggle();
+  setupTripOutfitModeToggle();
   setupDateInputs();
   setupRegionTabs();
   renderCityChips();

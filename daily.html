@@ -110,6 +110,27 @@
       </div>
     </section>
 
+    <!-- Style Mode Switcher (외투+이너 3벌 레이어드 vs 상의 1벌 단품) -->
+    <section class="glass-card" style="padding: 1rem 1.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.85rem;">
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <span style="font-size: 1.1rem;">👔</span>
+        <div>
+          <div style="font-size: 0.95rem; font-weight: 700; color: #fff;">스타일링 모드 선택</div>
+          <div style="font-size: 0.775rem; color: var(--text-muted);">원하는 착용 형태에 따라 상·하의 최적 배색을 전환합니다</div>
+        </div>
+      </div>
+      <div class="outfit-mode-btn-group" id="dailyOutfitModeGroup" role="group" aria-label="의상 조합 모드 선택">
+        <button type="button" class="btn-outfit-mode active" data-mode="layered" id="btnDailyModeLayered">
+          <span>🧥</span>
+          <span>외투 + 이너 (3벌 레이어드)</span>
+        </button>
+        <button type="button" class="btn-outfit-mode" data-mode="single" id="btnDailyModeSingle">
+          <span>👕</span>
+          <span>상의 1벌 (단품)</span>
+        </button>
+      </div>
+    </section>
+
     <!-- TPO Filter Tabs -->
     <section class="glass-card" style="padding: 1.25rem 1.5rem; margin-bottom: 1.75rem;">
       <div class="city-selection-label">

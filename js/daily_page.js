@@ -5,6 +5,7 @@
 import { DAILY_OUTFITS, WEEKDAY_THEMES, COLOR_MAP } from './data.js';
 
 let currentTpo = 'all';
+let outfitMode = localStorage.getItem('matchfit_outfit_mode') || 'layered';
 
 function renderWeekdayBanner() {
   const today = new Date().getDay(); // 0(일) ~ 6(토)
@@ -47,15 +48,19 @@ function renderOutfits() {
     return;
   }
 
+  const isLayeredActive = outfitMode === 'layered';
+
   container.innerHTML = filtered.map(item => {
-    const hasLayered = Boolean(item.outerId && item.innerId);
+    const canLayer = Boolean(item.outerId && item.innerId);
+    const useLayered = isLayeredActive && canLayer;
+
     const outerObj = item.outerId ? (COLOR_MAP.get(item.outerId) || { hex: '#1B2A4A', name: item.outerName }) : null;
     const innerObj = item.innerId ? (COLOR_MAP.get(item.innerId) || { hex: '#FFFFFF', name: item.innerName }) : null;
     const topObj = COLOR_MAP.get(item.topId) || { hex: '#9E9E9E', name: item.topName };
     const bottomObj = COLOR_MAP.get(item.bottomId) || { hex: '#383B3E', name: item.bottomName };
 
     // 3벌(외투+이너+하의) 또는 2벌 스와치 구성
-    const swatchHtml = hasLayered ? `
+    const swatchHtml = useLayered ? `
       <div class="daily-color-pairing-preview layered-3swatches">
         <div class="color-swatch-box">
           <span class="swatch-circle" style="background-color: ${outerObj.hex};"></span>
@@ -101,13 +106,15 @@ function renderOutfits() {
       </div>
     `;
 
-    const fitUrl = hasLayered
+    const fitUrl = useLayered
       ? `./?topMode=layered&outer=${item.outerId}&inner=${item.innerId}&bottom=${item.bottomId}`
       : `./?topMode=single&top=${item.topId}&bottom=${item.bottomId}`;
 
-    const fitLabel = hasLayered
+    const fitLabel = useLayered
       ? '외투+이너+하의 마네킹에 피팅하기 &rarr;'
-      : '이 코디 마네킹에 입혀보기 &rarr;';
+      : '상의+하의 마네킹에 피팅하기 &rarr;';
+
+    const fitIcon = useLayered ? '🧥👕👖' : '👕👖';
 
     return `
       <article class="daily-outfit-card">
@@ -134,12 +141,38 @@ function renderOutfits() {
         </div>
 
         <a href="${fitUrl}" class="btn-fit-in-mannequin" title="이 코디를 메인 마네킹에 피팅해보기">
-          <span>🧥👕👖</span>
+          <span>${fitIcon}</span>
           <span>${fitLabel}</span>
         </a>
       </article>
     `;
   }).join('');
+}
+
+function setupOutfitModeToggle() {
+  const modeGroup = document.getElementById('dailyOutfitModeGroup');
+  if (!modeGroup) return;
+
+  const buttons = modeGroup.querySelectorAll('.btn-outfit-mode');
+  
+  const updateButtons = () => {
+    buttons.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-mode') === outfitMode);
+    });
+  };
+
+  updateButtons();
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.getAttribute('data-mode');
+      if (outfitMode === mode) return;
+      outfitMode = mode;
+      localStorage.setItem('matchfit_outfit_mode', outfitMode);
+      updateButtons();
+      renderOutfits();
+    });
+  });
 }
 
 function setupTpoFilter() {
@@ -158,6 +191,7 @@ function setupTpoFilter() {
 // Init
 function init() {
   renderWeekdayBanner();
+  setupOutfitModeToggle();
   setupTpoFilter();
   renderOutfits();
 }

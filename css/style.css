@@ -3136,4 +3136,107 @@ body {
   }
 }
 
+/* =========================================================================
+   스타일 모드 스위처 (상의 1벌 vs 외투+이너 3벌) - 서브페이지 공통
+   ========================================================================= */
+.outfit-mode-btn-group {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 0.225rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-glass);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+  gap: 0.25rem;
+}
+
+.btn-outfit-mode {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transition: all var(--transition-fast);
+  min-height: 34px;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn-outfit-mode:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.btn-outfit-mode.active {
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  color: #0f172a;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
+}
+
+/* 날씨 코디 내 모드 스위처 */
+.weather-mode-toggle-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.weather-mode-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* 출장·여행 스케줄 헤더 모드 바 */
+.trip-schedule-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding: 0.85rem 1.15rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 640px) {
+  .outfit-mode-btn-group {
+    width: 100%;
+  }
+  .btn-outfit-mode {
+    flex: 1;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.45rem;
+  }
+  .weather-mode-toggle-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .trip-schedule-mode-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.75rem;
+  }
+}
+
+
 
